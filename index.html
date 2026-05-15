@@ -1,9 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OrientIA - Diagnostic d'orientation gratuit</title>
+  <meta name="description" content="Recevez un diagnostic gratuit pour comprendre les chances de votre enfant selon ses notes, ses métiers visés et les formations accessibles." />
+  <script async src="https://tally.so/widgets/embed.js"></script>
   <title>Cynakle - Plateforme éducative pilotée par IA</title>
   <meta name="description" content="Connectez élèves, parents et établissements avec une correction en temps réel, des analyses personnalisées et un accompagnement d'orientation." />
   <meta name="author" content="Cynakle" />
@@ -25,8 +27,28 @@
   <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
   
   <style>
-    /* Base styles */
     :root {
+      --blue: #2563eb;
+      --blue-dark: #1d4ed8;
+      --cyan: #06b6d4;
+      --green: #16a34a;
+      --orange: #f59e0b;
+      --red: #ef4444;
+      --ink: #0f172a;
+      --muted: #64748b;
+      --line: #e2e8f0;
+      --soft: #f8fafc;
+      --white: #ffffff;
+      --shadow: 0 20px 55px rgba(15, 23, 42, 0.10);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--soft);
+      color: var(--ink);
+      line-height: 1.5;
       --background: hsl(220, 33%, 98%);
       --foreground: hsl(222.2, 84%, 4.9%);
       --card: hsl(0, 0%, 100%);
@@ -71,62 +93,21 @@
       flex-direction: column;
       line-height: 1.6;
     }
+    a { color: inherit; }
 
-    .container {
+    .navbar {
       width: 100%;
-      max-width: 1400px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .navbar-container {
+      max-width: 1180px;
       margin: 0 auto;
-      padding: 0 1rem;
-    }
-
-    @media (min-width: 768px) {
-      .container {
-        padding: 0 1.5rem;
-      }
-    }
-
-    /* Typography */
-    h1, h2, h3, h4, h5, h6 {
-      font-weight: 600;
-      line-height: 1.2;
-      letter-spacing: -0.02em;
-    }
-
-    h1 {
-      font-size: 2.25rem;
-    }
-
-    @media (min-width: 768px) {
-      h1 {
-        font-size: 3rem;
-      }
-    }
-
-    @media (min-width: 1024px) {
-      h1 {
-        font-size: 3.75rem;
-      }
-    }
-
-    h2 {
-      font-size: 1.875rem;
-    }
-
-    @media (min-width: 768px) {
-      h2 {
-        font-size: 2.25rem;
-      }
-    }
-
-    h3 {
-      font-size: 1.5rem;
-    }
-
-    @media (min-width: 768px) {
-      h3 {
-        font-size: 1.875rem;
-      }
-    }
+      padding: 14px 22px;
 
     /* Navigation Styles - Improved */
     nav {
@@ -222,19 +203,17 @@
     /* Utility Classes */
     .flex {
       display: flex;
-    }
-
-    .flex-col {
-      flex-direction: column;
-    }
-
-    .items-center {
       align-items: center;
-    }
-
-    .justify-between {
       justify-content: space-between;
+      gap: 18px;
     }
+    .logo {
+      font-size: 25px;
+      font-weight: 900;
+      letter-spacing: -0.7px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
 
     .justify-center {
       justify-content: center;
@@ -392,14 +371,36 @@
     .max-w-xl {
       max-width: 36rem;
     }
-
-    .max-w-2xl {
-      max-width: 42rem;
+    .logo-dot {
+      width: 13px;
+      height: 13px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      box-shadow: 0 0 0 6px #dbeafe;
     }
-
-    .max-w-3xl {
-      max-width: 48rem;
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 26px;
+      align-items: center;
+      font-weight: 700;
+      color: #334155;
+      font-size: 15px;
     }
+    .nav-links a { text-decoration: none; transition: .2s; }
+    .nav-links a:hover { color: var(--blue); }
+    .nav-cta, .primary-cta, .secondary-cta {
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: 900;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: .2s;
+      white-space: nowrap;
 
     .max-w-4xl {
       max-width: 56rem;
@@ -408,21 +409,225 @@
     .max-w-5xl {
       max-width: 64rem;
     }
+    .nav-cta {
+      background: var(--blue);
+      color: white;
+      padding: 12px 18px;
+      box-shadow: 0 10px 25px rgba(37, 99, 235, .22);
+    }
+    .nav-cta:hover, .primary-cta:hover { background: var(--blue-dark); transform: translateY(-1px); }
 
-    .max-w-6xl {
-      max-width: 72rem;
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(37,99,235,.15), transparent 35%),
+        radial-gradient(circle at 85% 10%, rgba(6,182,212,.16), transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+      padding: 78px 22px 64px;
+    }
+    .hero-container {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 44px;
+      align-items: center;
+    }
+    .badge-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: #dbeafe;
+      color: #1d4ed8;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 900;
+    }
+    .badge.free { background: #dcfce7; color: #15803d; }
+    .hero h1 {
+      font-size: clamp(38px, 5vw, 64px);
+      line-height: 1.02;
+      letter-spacing: -2.2px;
+      margin-bottom: 20px;
+    }
+    .hero h1 span { color: var(--blue); }
+    .hero-subtitle {
+      font-size: 21px;
+      color: #475569;
+      max-width: 650px;
+      margin-bottom: 28px;
+    }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 20px; }
+    .primary-cta { background: var(--blue); color: white; padding: 16px 22px; font-size: 16px; box-shadow: 0 18px 36px rgba(37,99,235,.24); }
+    .secondary-cta { background: white; color: var(--ink); padding: 16px 22px; border: 1px solid var(--line); }
+    .micro-proof { color: #475569; font-size: 14px; font-weight: 700; }
+
+    .hero-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+    .mini-report-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 16px;
+      margin-bottom: 18px;
+    }
+    .mini-report-header h3 { font-size: 21px; }
+    .score-pill { background: #dcfce7; color: #15803d; padding: 9px 12px; border-radius: 999px; font-weight: 900; }
+    .mini-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 16px; }
+    .mini-stat { background: #f8fafc; border: 1px solid var(--line); border-radius: 18px; padding: 15px; }
+    .mini-stat span { display: block; color: var(--muted); font-size: 13px; font-weight: 700; }
+    .mini-stat strong { display: block; font-size: 22px; margin-top: 5px; }
+    .alert-box {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      border-radius: 18px;
+      padding: 15px;
+      color: #9a3412;
+      font-weight: 800;
     }
 
-    .min-h-screen {
-      min-height: 100vh;
-    }
-
-    .relative {
+    .section-transition {
+      height: 76px;
+      background: linear-gradient(180deg, transparent 0%, rgba(37,99,235,.09) 100%);
       position: relative;
     }
-
-    .absolute {
+    .section-transition:after {
+      content: "";
       position: absolute;
+      left: 50%;
+      bottom: -18px;
+      width: 38px;
+      height: 38px;
+      transform: translateX(-50%) rotate(45deg);
+      background: white;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    section { scroll-margin-top: 92px; }
+    .section { padding: 72px 22px; }
+    .container { max-width: 1180px; margin: 0 auto; }
+    .section-heading { text-align: center; max-width: 820px; margin: 0 auto 42px; }
+    .eyebrow { color: var(--blue); font-weight: 900; text-transform: uppercase; letter-spacing: .08em; font-size: 13px; margin-bottom: 10px; }
+    .section-heading h2 { font-size: clamp(30px, 4vw, 46px); line-height: 1.08; letter-spacing: -1.2px; margin-bottom: 14px; }
+    .section-heading p { font-size: 19px; color: #475569; }
+
+    .how-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      padding: 28px;
+      box-shadow: 0 16px 38px rgba(15,23,42,.07);
+    }
+    .flow { display: grid; gap: 12px; text-align: center; }
+    .flow-item, .flow-result, .flow-final {
+      padding: 17px;
+      border-radius: 17px;
+      font-weight: 900;
+    }
+    .flow-item { background: #eff6ff; color: #1d4ed8; }
+    .flow-result { background: #dcfce7; color: #15803d; font-size: 18px; }
+    .flow-final { background: #fef3c7; color: #92400e; }
+    .arrow { color: var(--muted); font-size: 26px; font-weight: 900; }
+    .comparison { border: 1px solid var(--line); border-radius: 18px; overflow: hidden; }
+    .comparison-row { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--line); }
+    .comparison-row:last-child { border-bottom: none; }
+    .comparison-row div { padding: 14px; font-size: 15px; }
+    .comparison-row div:first-child { background: #f8fafc; color: #64748b; }
+    .comparison-row div:last-child { background: white; color: #0f172a; font-weight: 900; }
+    .comparison-row.header div { background: #0f172a; color: white; }
+
+    .dashboard-section { background: linear-gradient(180deg, #ffffff 0%, #eef6ff 100%); }
+    .dashboard {
+      background: rgba(255,255,255,.75);
+      border: 1px solid var(--line);
+      border-radius: 34px;
+      padding: 26px;
+      box-shadow: var(--shadow);
+    }
+    .top-row { display: grid; grid-template-columns: 210px 1fr; gap: 24px; align-items: center; margin-bottom: 20px; }
+    .top-row h2 { font-size: 32px; line-height: 1.1; }
+    .student-info { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .student-info div, .note-box { background: white; border: 1px solid var(--line); border-radius: 18px; padding: 16px; }
+    .student-info span, .note-box span { display: block; color: var(--muted); font-size: 13px; font-weight: 800; }
+    .student-info strong, .note-box strong { display: block; font-size: 20px; margin-top: 5px; }
+    .notes-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin: 18px 0 28px; }
+    .jobs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: 28px; }
+    .job-card { background: white; border: 1px solid var(--line); border-left: 7px solid var(--green); border-radius: 22px; padding: 22px; box-shadow: 0 14px 28px rgba(15,23,42,.07); }
+    .job-card.orange { border-left-color: var(--orange); }
+    .job-card h3 { font-size: 22px; margin-bottom: 10px; }
+    .job-card p { color: #334155; margin-bottom: 7px; }
+    .score { display: flex; justify-content: space-between; align-items: end; margin-top: 18px; }
+    .score span { color: var(--muted); font-size: 13px; font-weight: 800; }
+    .score strong { font-size: 32px; }
+
+    .example-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 22px; align-items: stretch; }
+    .table-card { overflow: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { text-align: left; padding: 13px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+    th { background: #f8fafc; color: var(--ink); font-weight: 900; }
+    .tag { display: inline-block; padding: 6px 10px; border-radius: 999px; font-size: 12px; font-weight: 900; }
+    .green-tag { background: #dcfce7; color: #15803d; }
+    .yellow-tag { background: #fef3c7; color: #b45309; }
+    .red-tag { background: #fee2e2; color: #b91c1c; }
+
+    .radar-wrap { display: grid; grid-template-columns: 1fr; place-items: center; gap: 15px; }
+    .radar {
+      width: 320px;
+      height: 320px;
+      position: relative;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle, transparent 0 22%, rgba(148,163,184,.18) 22% 23%, transparent 23% 44%, rgba(148,163,184,.18) 44% 45%, transparent 45% 66%, rgba(148,163,184,.18) 66% 67%, transparent 67%),
+        conic-gradient(from 0deg, rgba(37,99,235,.07), rgba(6,182,212,.07), rgba(22,163,74,.07), rgba(245,158,11,.07), rgba(37,99,235,.07));
+      border-radius: 50%;
+      border: 1px solid var(--line);
+    }
+    .radar:before {
+      content: "";
+      position: absolute;
+      inset: 45px;
+      background: rgba(37,99,235,.24);
+      border: 3px solid rgba(37,99,235,.75);
+      clip-path: polygon(50% 9%, 82% 28%, 74% 70%, 50% 78%, 25% 64%, 30% 30%);
+      filter: drop-shadow(0 10px 18px rgba(37,99,235,.20));
+    }
+    .axis { position: absolute; font-size: 12px; font-weight: 900; background: white; border: 1px solid var(--line); padding: 6px 8px; border-radius: 999px; box-shadow: 0 6px 16px rgba(15,23,42,.08); }
+    .a1 { top: -7px; left: 50%; transform: translateX(-50%); }
+    .a2 { top: 55px; right: -22px; }
+    .a3 { bottom: 65px; right: -28px; }
+    .a4 { bottom: -4px; left: 50%; transform: translateX(-50%); }
+    .a5 { bottom: 68px; left: -26px; }
+    .a6 { top: 55px; left: -24px; }
+    .legend { display: grid; gap: 8px; color: #475569; font-size: 14px; }
+    .legend b { color: var(--ink); }
+
+    .formations-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 22px; }
+    .diagnostic { margin-top: 22px; background: #0f172a; color: white; }
+    .diagnostic ul { padding-left: 20px; margin-top: 12px; }
+    .diagnostic li { margin-bottom: 10px; }
+    .diagnostic p { color: #cbd5e1; margin-top: 16px; }
+
+    .free-section { background: white; }
+    .offer-box {
+      background: linear-gradient(135deg, #0f172a, #1d4ed8);
+      color: white;
+      border-radius: 34px;
+      padding: 46px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 28px;
     }
 
     .fixed {
@@ -1009,23 +1214,35 @@
       margin-top: 0.5rem;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      max-width: 24rem;
-      opacity: 0;
-      transform: translateY(1rem);
-      animation: toast-in 0.3s forwards;
+      box-shadow: var(--shadow);
     }
+    .offer-box h2 { font-size: clamp(30px, 4vw, 46px); line-height: 1.08; margin-bottom: 12px; }
+    .offer-box p { color: #dbeafe; font-size: 18px; max-width: 760px; }
+    .offer-box .primary-cta { background: white; color: #1d4ed8; }
+    .offer-box .primary-cta:hover { background: #eff6ff; }
 
-    @keyframes toast-in {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .faq-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .faq-card h3 { font-size: 19px; margin-bottom: 8px; }
+    .faq-card p { color: #475569; }
+
+    .footer { padding: 32px 22px; background: #0f172a; color: #cbd5e1; text-align: center; }
+    .footer b { color: white; }
+
+    @media (max-width: 950px) {
+      .hero-container, .how-grid, .example-grid, .formations-grid, .offer-box { grid-template-columns: 1fr; }
+      .top-row, .student-info, .notes-grid, .jobs, .faq-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .hero { padding-top: 44px; }
+      .radar { width: 280px; height: 280px; }
+      .offer-box { padding: 30px; }
     }
-
-    .toast .title {
-      font-weight: 600;
-      margin-bottom: 0.25rem;
+    @media (max-width: 560px) {
+      .navbar-container { flex-wrap: wrap; justify-content: center; }
+      .nav-cta { width: 100%; }
+      .hero-actions a, .hero-actions button { width: 100%; }
+      .mini-grid { grid-template-columns: 1fr; }
+      .dashboard { padding: 16px; border-radius: 24px; }
+      .comparison-row { grid-template-columns: 1fr; }
     }
 
     /* Feature Icons */
@@ -1071,8 +1288,38 @@
     }
   </style>
 </head>
-
 <body>
+  <nav class="navbar">
+    <div class="navbar-container">
+      <div class="logo"><span class="logo-dot"></span>OrientIA</div>
+      <ul class="nav-links">
+        <li><a href="#comment-marche">Comment ça marche</a></li>
+        <li><a href="#exemple">Exemple</a></li>
+        <li><a href="#diagnostic">Diagnostic gratuit</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+      <button class="nav-cta" data-tally-open="RGvR9j" data-tally-layout="modal" data-tally-width="760" data-tally-emoji-text="🎯" data-tally-emoji-animation="wave">
+        Recevoir un diagnostic gratuit
+      </button>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-container">
+      <div>
+        <div class="badge-row">
+          <span class="badge free">✅ Gratuit pour les premiers parents</span>
+          <span class="badge">📊 Notes + métier + formations</span>
+        </div>
+        <h1>Votre enfant rêve d’un métier ? <span>Vérifiez si ses notes ouvrent le bon chemin.</span></h1>
+        <p class="hero-subtitle">
+          En quelques minutes, vous saisissez ses notes et les métiers envisagés. Vous recevez un diagnostic simple : forces, écarts, formations possibles et actions prioritaires.
+        </p>
+        <div class="hero-actions">
+          <button class="primary-cta" data-tally-open="RGvR9j" data-tally-layout="modal" data-tally-width="760" data-tally-emoji-text="🎯" data-tally-emoji-animation="wave">
+            Faire le test gratuit maintenant
+          </button>
+          <a class="secondary-cta" href="#exemple">Voir un exemple de rapport</a>
   <div class="min-h-screen flex flex-col">
     <!-- Navbar -->
     <header class="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-md border-b">
@@ -1116,7 +1363,19 @@
           </button>
           <a href="#pricing" class="hidden md:inline-flex bg-primary hover:bg-ai-darkPurple transition-colors text-white px-4 py-2 rounded-md">Découvrir nos offres</a>
         </div>
+        <p class="micro-proof">Sans engagement · Réponse pensée pour les parents · Utile dès le collège</p>
       </div>
+
+      <div class="hero-card" aria-label="Aperçu du diagnostic">
+        <div class="mini-report-header">
+          <h3>Diagnostic exemple</h3>
+          <span class="score-pill">Utile en 5 min</span>
+        </div>
+        <div class="mini-grid">
+          <div class="mini-stat"><span>Métier visé</span><strong>Ingénieur robotique</strong></div>
+          <div class="mini-stat"><span>Alignement actuel</span><strong>90%</strong></div>
+          <div class="mini-stat"><span>Point fort</span><strong>Maths 16/20</strong></div>
+          <div class="mini-stat"><span>Action prioritaire</span><strong>Français</strong></div>
       <div id="mobile-menu" class="md:hidden hidden">
         <div class="px-4 py-3 space-y-1">
           <a href="#home">Accueil</a>
@@ -1125,9 +1384,77 @@
           <a href="#pricing">Tarifs</a>
           <a href="#contact">Contact</a>
         </div>
+        <div class="alert-box">Lecture parent : bon potentiel scientifique, mais l’expression écrite doit progresser pour sécuriser les dossiers futurs.</div>
       </div>
-    </header>
+    </div>
+  </header>
 
+  <div class="section-transition"></div>
+
+  <section id="comment-marche" class="section">
+    <div class="container">
+      <div class="section-heading">
+        <div class="eyebrow">La promesse</div>
+        <h2>Plus seulement “que veut-il faire ?”, mais “que faut-il améliorer pour y arriver ?”</h2>
+        <p>Notre approche transforme les notes et les ambitions en lecture concrète pour les parents.</p>
+      </div>
+
+      <div class="how-grid">
+        <div class="card">
+          <h3>Comment ça marche ?</h3><br />
+          <div class="flow">
+            <div class="flow-item">Notes scolaires de l’enfant</div>
+            <div class="arrow">+</div>
+            <div class="flow-item">Métiers envisagés par la famille</div>
+            <div class="arrow">↓</div>
+            <div class="flow-result">Probabilité / cohérence d’accès</div>
+            <div class="arrow">↓</div>
+            <div class="flow-final">Plan d’action clair pour progresser</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Différent d’un conseil d’orientation classique</h3><br />
+          <div class="comparison">
+            <div class="comparison-row header"><div>Orientation classique</div><div>OrientIA</div></div>
+            <div class="comparison-row"><div>Conseils souvent généraux</div><div>Diagnostic personnalisé</div></div>
+            <div class="comparison-row"><div>Basé sur échanges et impressions</div><div>Basé sur notes, métiers et formations</div></div>
+            <div class="comparison-row"><div>Peu de visibilité sur les exigences</div><div>Lecture des écarts matière par matière</div></div>
+            <div class="comparison-row"><div>“Il faut travailler plus”</div><div>“Voici quoi travailler en priorité”</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-transition"></div>
+
+  <section id="exemple" class="section dashboard-section">
+    <div class="container">
+      <div class="section-heading">
+        <div class="eyebrow">Exemple concret</div>
+        <h2>Un rapport que les parents comprennent immédiatement</h2>
+        <p>Voici un exemple fictif pour un élève de 6ème : notes, ville, métiers envisagés, rosace et formations futures.</p>
+      </div>
+
+      <div class="dashboard">
+        <div class="top-row">
+          <h2>Profil<br />élève</h2>
+          <div class="student-info">
+            <div><span>Élève</span><strong>Adam Dupont</strong></div>
+            <div><span>Classe</span><strong>6ème</strong></div>
+            <div><span>Ville</span><strong>Versailles</strong></div>
+            <div><span>Moyenne générale</span><strong>14.3 / 20</strong></div>
+          </div>
+        </div>
+
+        <div class="notes-grid">
+          <div class="note-box"><span>Mathématiques</span><strong>16/20</strong></div>
+          <div class="note-box"><span>Français</span><strong>12/20</strong></div>
+          <div class="note-box"><span>Sciences</span><strong>15/20</strong></div>
+          <div class="note-box"><span>Anglais</span><strong>14/20</strong></div>
+          <div class="note-box"><span>Histoire-Géo</span><strong>13/20</strong></div>
+          <div class="note-box"><span>Technologie</span><strong>16/20</strong></div>
     // ... keep existing code (all main content sections remain the same)
 
     <main class="flex-grow">
@@ -1199,8 +1526,25 @@
             </button>
           </a>
         </div>
-      </section>
 
+        <div class="jobs">
+          <div class="job-card">
+            <h3>Ingénieur robotique</h3>
+            <p><b>Domaine :</b> ingénierie</p>
+            <p><b>Forces liées :</b> maths, sciences, logique</p>
+            <div class="score"><span>Score d’alignement</span><strong>90%</strong></div>
+          </div>
+          <div class="job-card orange">
+            <h3>Médecin</h3>
+            <p><b>Domaine :</b> santé</p>
+            <p><b>Forces liées :</b> sciences, régularité</p>
+            <div class="score"><span>Score d’alignement</span><strong>75%</strong></div>
+          </div>
+          <div class="job-card">
+            <h3>Développeur informatique</h3>
+            <p><b>Domaine :</b> numérique</p>
+            <p><b>Forces liées :</b> logique, résolution</p>
+            <div class="score"><span>Score d’alignement</span><strong>88%</strong></div>
       <!-- Solutions Section -->
       <section id="solutions" class="py-20 px-4 md:px-6">
         <div class="container mx-auto max-w-6xl">
@@ -1605,8 +1949,33 @@
             </div>
           </div>
         </div>
-      </section>
 
+        <div class="example-grid">
+          <div class="card table-card">
+            <h3>Comparaison avec un profil attendu moyen</h3><br />
+            <table>
+              <tr><th>Matière</th><th>Note élève</th><th>Niveau attendu</th><th>Écart</th><th>Lecture</th></tr>
+              <tr><td>Mathématiques</td><td>16/20</td><td>16.5/20</td><td>-0.5</td><td><span class="tag yellow-tag">Proche</span></td></tr>
+              <tr><td>Français</td><td>12/20</td><td>14/20</td><td>-2</td><td><span class="tag red-tag">À renforcer</span></td></tr>
+              <tr><td>Sciences</td><td>15/20</td><td>15.5/20</td><td>-0.5</td><td><span class="tag yellow-tag">Proche</span></td></tr>
+              <tr><td>Anglais</td><td>14/20</td><td>13.5/20</td><td>+0.5</td><td><span class="tag green-tag">Au-dessus</span></td></tr>
+              <tr><td>Technologie</td><td>16/20</td><td>15/20</td><td>+1</td><td><span class="tag green-tag">Au-dessus</span></td></tr>
+            </table>
+          </div>
+
+          <div class="card radar-wrap">
+            <h3>Rosace réelle des notes</h3>
+            <div class="radar" aria-label="Rosace des notes : mathématiques 16, français 12, sciences 15, anglais 14, histoire géographie 13, technologie 16">
+              <span class="axis a1">Maths 16</span>
+              <span class="axis a2">Sciences 15</span>
+              <span class="axis a3">Anglais 14</span>
+              <span class="axis a4">Techno 16</span>
+              <span class="axis a5">H-G 13</span>
+              <span class="axis a6">Français 12</span>
+            </div>
+            <div class="legend">
+              <p><b>Lecture :</b> profil très scientifique.</p>
+              <p><b>Point d’attention :</b> français / expression écrite.</p>
       <!-- Contact Form Section -->
       <section id="contact" class="py-20 px-4 md:px-6 bg-secondary/50">
         <div class="container mx-auto max-w-6xl">
@@ -1717,9 +2086,26 @@
             </div>
           </div>
         </div>
-      </section>
-    </main>
 
+        <div class="formations-grid">
+          <div class="card table-card">
+            <h3>Formations possibles dans un rayon de 100 km</h3><br />
+            <table>
+              <tr><th>Formation</th><th>Établissement</th><th>Ville</th><th>Distance</th><th>Lecture</th></tr>
+              <tr><td>BUT Informatique</td><td>IUT de Vélizy</td><td>Vélizy</td><td>18 km</td><td>Accessible si profil scientifique confirmé</td></tr>
+              <tr><td>Licence Informatique</td><td>Paris-Saclay</td><td>Orsay</td><td>33 km</td><td>Bon alignement maths/sciences</td></tr>
+              <tr><td>Cycle ingénieur post-bac</td><td>École partenaire</td><td>Paris</td><td>22 km</td><td>Dossier à sécuriser</td></tr>
+            </table>
+          </div>
+
+          <div class="card table-card">
+            <h3>Spécialités / doublettes à viser plus tard</h3><br />
+            <table>
+              <tr><th>Objectif</th><th>Combinaisons pertinentes</th></tr>
+              <tr><td>Robotique</td><td>Mathématiques + Physique-Chimie</td></tr>
+              <tr><td>Informatique</td><td>Mathématiques + NSI</td></tr>
+              <tr><td>Ingénierie</td><td>Mathématiques + Sciences de l’ingénieur</td></tr>
+            </table>
     <!-- Footer -->
     <footer class="bg-secondary py-12 px-4 md:px-6 border-t">
       <div class="container mx-auto max-w-6xl">
@@ -1792,24 +2178,22 @@
             </p>
           </div>
         </div>
+
+        <div class="card diagnostic">
+          <h3>Diagnostic automatique</h3>
+          <ul>
+            <li>Adam a un profil cohérent avec les métiers scientifiques et numériques.</li>
+            <li>Les mathématiques, les sciences et la technologie sont des points forts à conserver.</li>
+            <li>Le français est le levier prioritaire : il peut pénaliser plus tard les dossiers sélectifs.</li>
+            <li>Action recommandée : 20 minutes de lecture/rédaction 4 fois par semaine pendant 3 mois.</li>
+          </ul>
+          <p>Exemple fictif de rendu : l’objectif est de donner aux parents une lecture claire, pas de remplacer un conseiller.</p>
+        </div>
       </div>
-    </footer>
-  </div>
+    </div>
+  </section>
 
-  <div id="toast-container"></div>
-
-  <script>
-    // Set current year in footer
-    document.getElementById('current-year').textContent = new Date().getFullYear();
-
-    // Mobile menu toggle
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-
-    mobileMenuButton.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
-    });
-
+  <div class="section-transition"></div>
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
@@ -1898,24 +2282,46 @@
       }, 1000);
     });
 
-    // Toast function
-    function showToast(title, message, duration = 3000) {
-      const toastContainer = document.getElementById('toast-container');
-      
-      // Create toast element
-      const toast = document.createElement('div');
-      toast.className = 'toast';
-      toast.innerHTML = `
+  <section id="diagnostic" class="section free-section">
+    <div class="container">
+      <div class="offer-box">
         <div>
-          <div class="title">${title}</div>
-          <div>${message}</div>
+          <h2>Recevez un premier diagnostic gratuit</h2>
+          <p>Vous indiquez la classe, les notes principales, la ville et les métiers envisagés. Nous vous retournons une lecture claire pour savoir où votre enfant est fort, où il doit progresser et quelles pistes surveiller.</p>
         </div>
-        <button type="button" class="ghost" onClick="this.parentElement.remove()">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
-            <path d="M18 6 6 18"></path>
-            <path d="m6 6 12 12"></path>
-          </svg>
+        <button class="primary-cta" data-tally-open="RGvR9j" data-tally-layout="modal" data-tally-width="760" data-tally-emoji-text="🎯" data-tally-emoji-animation="wave">
+          Ouvrir le formulaire gratuit
         </button>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="section">
+    <div class="container">
+      <div class="section-heading">
+        <div class="eyebrow">FAQ</div>
+        <h2>Questions fréquentes des parents</h2>
+      </div>
+      <div class="faq-grid">
+        <div class="card faq-card">
+          <h3>Est-ce vraiment gratuit ?</h3>
+          <p>Oui, le premier diagnostic est gratuit pour tester l’intérêt du service avec des familles.</p>
+        </div>
+        <div class="card faq-card">
+          <h3>À partir de quelle classe ?</h3>
+          <p>Dès le collège, surtout pour identifier tôt les points forts, les fragilités et les ambitions.</p>
+        </div>
+        <div class="card faq-card">
+          <h3>Est-ce une décision automatique ?</h3>
+          <p>Non. C’est une aide à la décision pour ouvrir une discussion concrète parent-enfant.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <b>OrientIA</b> — Diagnostic d’orientation gratuit basé sur les notes, les métiers et les formations.
+  </footer>
       `;
       
       // Add to container
