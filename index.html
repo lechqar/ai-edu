@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -449,6 +448,116 @@
       .report-card { padding: 24px; }
       .offer-box { padding: 30px; }
     }
+
+    /* Sections confiance, mentions légales et cookies */
+    .about-section { background: #ffffff; }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+    .about-card, .trust-card, .legal-card {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 30px;
+      box-shadow: 0 16px 38px rgba(15,23,42,.07);
+    }
+    .about-card p, .trust-card p, .legal-card p, .legal-card li {
+      color: #475569;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+    .about-card strong { color: var(--ink); }
+    .trust-list { list-style: none; padding: 0; display: grid; gap: 12px; margin-top: 18px; }
+    .trust-list li {
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px 16px;
+      font-weight: 800;
+      color: #334155;
+    }
+    .mission-box {
+      margin-top: 20px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1e40af;
+      border-radius: 18px;
+      padding: 18px;
+      font-weight: 900;
+    }
+    .legal-section { background: linear-gradient(180deg,#f8fafc 0%,#ffffff 100%); }
+    .legal-grid { display: grid; grid-template-columns: 1fr; gap: 16px; max-width: 1000px; margin: 0 auto; }
+    .legal-card details {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px 20px;
+      background: #ffffff;
+    }
+    .legal-card details + details { margin-top: 14px; }
+    .legal-card summary {
+      cursor: pointer;
+      font-size: 19px;
+      font-weight: 900;
+      color: var(--ink);
+    }
+    .legal-content { margin-top: 16px; display: grid; gap: 12px; }
+    .legal-content ul { padding-left: 20px; }
+    .legal-content h4 { margin-top: 10px; font-size: 16px; color: var(--ink); }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 14px;
+      font-size: 14px;
+    }
+    .footer-links a { color: #dbeafe; text-decoration: none; font-weight: 700; }
+    .footer-links a:hover { text-decoration: underline; }
+    .cookie-banner {
+      position: fixed;
+      left: 20px;
+      right: 20px;
+      bottom: 20px;
+      z-index: 10000;
+      max-width: 920px;
+      margin: 0 auto;
+      background: #0f172a;
+      color: #ffffff;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 22px;
+      padding: 18px;
+      box-shadow: 0 22px 60px rgba(15,23,42,.35);
+      display: none;
+      gap: 18px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .cookie-banner.show { display: flex; }
+    .cookie-banner p { color: #cbd5e1; font-size: 14px; line-height: 1.5; }
+    .cookie-banner a { color: #93c5fd; font-weight: 900; text-decoration: none; }
+    .cookie-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .cookie-btn {
+      border: none;
+      cursor: pointer;
+      border-radius: 999px;
+      padding: 12px 16px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .cookie-accept { background: #2563eb; color: #fff; }
+    .cookie-secondary { background: #ffffff; color: #0f172a; }
+    @media (max-width: 950px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .cookie-banner { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 560px) {
+      .cookie-banner { left: 12px; right: 12px; bottom: 82px; }
+      .cookie-actions, .cookie-btn { width: 100%; }
+    }
+
   </style>
 </head>
 <body>
@@ -460,6 +569,7 @@
         <li><a href="#difference">Différence</a></li>
         <li><a href="#exemple">Rapport</a></li>
         <li><a href="#diagnostic">Diagnostic gratuit</a></li>
+        <li><a href="#qui-sommes-nous">Qui sommes-nous</a></li>
         <li><a href="#faq">FAQ</a></li>
       </ul>
       <button class="nav-cta" data-tally-open="RGvR9j" data-tally-layout="modal" data-tally-width="760" data-tally-emoji-text="🎯" data-tally-emoji-animation="wave">
@@ -608,6 +718,115 @@
     </div>
   </section>
 
+
+  <section id="qui-sommes-nous" class="section about-section">
+    <div class="container">
+      <div class="section-heading">
+        <div class="eyebrow">Qui sommes-nous ?</div>
+        <h2>Cynakle, l’outil d’orientation scolaire assisté par l’IA</h2>
+        <p>Notre mission est d’aider les parents à comprendre plus clairement les parcours possibles de leur enfant.</p>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-card">
+          <p><strong>Cynakle</strong> est une plateforme d’aide à l’orientation scolaire assistée par l’intelligence artificielle. Le service s’adresse aux parents qui souhaitent mieux comprendre les forces scolaires de leur enfant, les métiers qu’il vise et les formations qui pourraient correspondre à son profil.</p>
+          <br />
+          <p>À partir des notes, de la classe, de la ville et des métiers envisagés, Cynakle produit un rapport personnalisé, lisible et actionnable. Le rapport est fourni sous 48h afin de permettre une vérification manuelle avant envoi.</p>
+          <div class="mission-box">🎯 Notre objectif : rendre l’orientation plus claire, plus personnalisée et plus accessible aux familles.</div>
+        </div>
+
+        <div class="trust-card">
+          <h3>Ce que Cynakle analyse</h3>
+          <ul class="trust-list">
+            <li>✓ Les notes et matières fortes</li>
+            <li>✓ Les métiers envisagés par la famille</li>
+            <li>✓ Les écarts avec les profils attendus</li>
+            <li>✓ Les formations accessibles selon la ville</li>
+            <li>✓ La tension du métier et l’impact de l’IA</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="informations-legales" class="section legal-section">
+    <div class="container">
+      <div class="section-heading">
+        <div class="eyebrow">Informations légales</div>
+        <h2>Transparence, données personnelles et conditions d’utilisation</h2>
+        <p>Les informations ci-dessous présentent l’éditeur du site, l’utilisation des données, les cookies et les conditions d’utilisation du service.</p>
+      </div>
+
+      <div class="legal-grid">
+        <div class="legal-card">
+          <details id="mentions-legales" open>
+            <summary>Mentions légales</summary>
+            <div class="legal-content">
+              <p><strong>Éditeur du site :</strong> CYNAKLE, société par actions simplifiée, immatriculée au RCS de Nanterre.</p>
+              <p><strong>SIREN :</strong> 928 312 669 — <strong>SIRET :</strong> 928 312 669 00015.</p>
+              <p><strong>Siège social :</strong> Bâtiment Bourgogne, 19 rue des 4 Vents, 92380 Garches, France.</p>
+              <p><strong>Président :</strong> CYNAKLE HOLDING.</p>
+              <p><strong>Contact :</strong> <a href="mailto:contact@cynakle.com">contact@cynakle.com</a>.</p>
+              <p><strong>Site :</strong> cynakle.com.</p>
+              <p><strong>Hébergement / formulaire :</strong> les formulaires sont opérés via Tally.so. Les données collectées via les formulaires sont traitées dans le cadre de la demande de diagnostic.</p>
+            </div>
+          </details>
+
+          <details id="confidentialite">
+            <summary>Politique de confidentialité</summary>
+            <div class="legal-content">
+              <p>Cynakle collecte uniquement les informations nécessaires à la préparation du diagnostic d’orientation demandé par le parent.</p>
+              <h4>Données collectées</h4>
+              <ul>
+                <li>Prénom et adresse email du parent ou du demandeur ;</li>
+                <li>Classe de l’enfant ;</li>
+                <li>Notes scolaires renseignées ;</li>
+                <li>Ville de résidence ;</li>
+                <li>Métiers envisagés ;</li>
+                <li>Informations complémentaires éventuellement fournies dans le formulaire.</li>
+              </ul>
+              <h4>Finalités</h4>
+              <ul>
+                <li>Analyser les informations transmises ;</li>
+                <li>Préparer et envoyer un rapport d’orientation personnalisé ;</li>
+                <li>Répondre aux demandes de contact ;</li>
+                <li>Améliorer le service.</li>
+              </ul>
+              <p>Aucun compte utilisateur n’est créé sur le site. Aucun système de publicité ou d’analyse d’audience de type Google Analytics n’est utilisé à ce stade.</p>
+              <p>Vous pouvez demander l’accès, la rectification ou la suppression de vos données en écrivant à <a href="mailto:contact@cynakle.com">contact@cynakle.com</a>.</p>
+            </div>
+          </details>
+
+          <details id="cookies">
+            <summary>Politique cookies</summary>
+            <div class="legal-content">
+              <p>Le site Cynakle n’utilise pas de cookies publicitaires ni d’outils d’analyse d’audience à ce stade.</p>
+              <p>Un cookie ou stockage local peut être utilisé uniquement pour mémoriser l’acceptation du bandeau cookies. Les formulaires intégrés via Tally peuvent également utiliser des cookies nécessaires à leur bon fonctionnement.</p>
+              <p>En continuant votre navigation ou en cliquant sur « J’ai compris », vous acceptez l’utilisation des cookies strictement nécessaires au fonctionnement du site et des formulaires.</p>
+            </div>
+          </details>
+
+          <details id="cgu">
+            <summary>Conditions générales d’utilisation</summary>
+            <div class="legal-content">
+              <p>L’utilisation du site cynakle.com implique l’acceptation des présentes conditions générales d’utilisation.</p>
+              <h4>Objet du service</h4>
+              <p>Cynakle propose un service gratuit de diagnostic d’orientation scolaire, basé sur les informations transmises par les parents via un formulaire.</p>
+              <h4>Nature du diagnostic</h4>
+              <p>Le rapport fourni constitue une aide à la décision. Il ne remplace pas un conseiller d’orientation, un établissement scolaire, une décision administrative ou une analyse pédagogique complète.</p>
+              <h4>Responsabilité de l’utilisateur</h4>
+              <p>L’utilisateur s’engage à fournir des informations exactes et à ne pas transmettre de données inutiles ou sensibles. Le service est destiné aux parents ou responsables légaux.</p>
+              <h4>Disponibilité du service</h4>
+              <p>Cynakle fait ses meilleurs efforts pour assurer l’accès au site et au formulaire, sans garantir une disponibilité permanente.</p>
+              <h4>Propriété intellectuelle</h4>
+              <p>Les contenus, textes, éléments graphiques, rapports types et supports présents sur le site sont protégés. Toute reproduction non autorisée est interdite.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="faq" class="section">
     <div class="container">
       <div class="section-heading">
@@ -623,7 +842,42 @@
   </section>
 
   <footer class="footer">
-    <b>Cynakle</b> — Diagnostic d’orientation gratuit basé sur les notes, les métiers et les formations.
+    <b>Cynakle</b> — Plateforme d’orientation scolaire assistée par l’intelligence artificielle.
+    <div class="footer-links">
+      <a href="#qui-sommes-nous">Qui sommes-nous ?</a>
+      <a href="#mentions-legales">Mentions légales</a>
+      <a href="#confidentialite">Confidentialité</a>
+      <a href="#cookies">Cookies</a>
+      <a href="#cgu">CGU</a>
+      <a href="mailto:contact@cynakle.com">Contact</a>
+    </div>
   </footer>
+
+  <div id="cookieBanner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Information cookies">
+    <div>
+      <strong>Cookies</strong>
+      <p>Nous utilisons uniquement les cookies nécessaires au fonctionnement du site et des formulaires Tally. Aucun cookie publicitaire ni Google Analytics n’est utilisé.</p>
+      <p><a href="#cookies">Lire la politique cookies</a></p>
+    </div>
+    <div class="cookie-actions">
+      <button class="cookie-btn cookie-secondary" onclick="document.getElementById('cookies').open = true; location.hash='cookies';">En savoir plus</button>
+      <button class="cookie-btn cookie-accept" id="acceptCookies">J’ai compris</button>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var banner = document.getElementById('cookieBanner');
+      var btn = document.getElementById('acceptCookies');
+      if (!localStorage.getItem('cynakle_cookie_ok')) {
+        banner.classList.add('show');
+      }
+      btn.addEventListener('click', function () {
+        localStorage.setItem('cynakle_cookie_ok', 'true');
+        banner.classList.remove('show');
+      });
+    })();
+  </script>
+
 </body>
 </html>
