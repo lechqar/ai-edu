@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -339,6 +340,54 @@
       .dashboard { padding: 16px; border-radius: 24px; }
       .comparison-row { grid-template-columns: 1fr; }
     }
+
+
+    /* Aperçu PDF du rapport */
+    .report-pdf-preview {
+      background: linear-gradient(180deg, #ffffff 0%, #eef6ff 100%);
+    }
+    .pdf-preview-card {
+      max-width: 980px;
+      margin: 0 auto;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+    .pdf-preview-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 4px 6px 16px;
+      color: #475569;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .pdf-preview-toolbar a {
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 900;
+    }
+    .pdf-frame {
+      width: 100%;
+      height: 980px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: #f8fafc;
+      display: block;
+    }
+    .pdf-fallback {
+      padding: 30px;
+      text-align: center;
+      color: #475569;
+    }
+    @media (max-width: 950px) {
+      .pdf-frame { height: 760px; }
+      .pdf-preview-toolbar { align-items: flex-start; flex-direction: column; }
+    }
+
   </style>
 </head>
 <body>
@@ -433,117 +482,31 @@
 
   <div class="section-transition"></div>
 
-  <section id="exemple" class="section dashboard-section">
+  <section id="exemple" class="section report-pdf-preview">
     <div class="container">
       <div class="section-heading">
         <div class="eyebrow">Exemple concret</div>
-        <h2>Un rapport que les parents comprennent immédiatement</h2>
-        <p>Voici un exemple fictif pour un élève de 6ème : notes, ville, métiers envisagés, rosace et formations futures.</p>
+        <h2>Prévisualisation du rapport</h2>
+        <p>Voici le rapport PDF intégré directement dans la page.</p>
       </div>
 
-      <div class="dashboard">
-        <div class="top-row">
-          <h2>Profil<br />élève</h2>
-          <div class="student-info">
-            <div><span>Élève</span><strong>Adam Dupont</strong></div>
-            <div><span>Classe</span><strong>6ème</strong></div>
-            <div><span>Ville</span><strong>Versailles</strong></div>
-            <div><span>Moyenne générale</span><strong>14.3 / 20</strong></div>
-          </div>
+      <div class="pdf-preview-card">
+        <div class="pdf-preview-toolbar">
+          <span>Aperçu du rapport d’orientation</span>
+          <a href="rapport_gratuit.pdf" target="_blank" rel="noopener">Ouvrir le PDF</a>
         </div>
 
-        <div class="notes-grid">
-          <div class="note-box"><span>Mathématiques</span><strong>16/20</strong></div>
-          <div class="note-box"><span>Français</span><strong>12/20</strong></div>
-          <div class="note-box"><span>Sciences</span><strong>15/20</strong></div>
-          <div class="note-box"><span>Anglais</span><strong>14/20</strong></div>
-          <div class="note-box"><span>Histoire-Géo</span><strong>13/20</strong></div>
-          <div class="note-box"><span>Technologie</span><strong>16/20</strong></div>
-        </div>
-
-        <div class="jobs">
-          <div class="job-card">
-            <h3>Ingénieur robotique</h3>
-            <p><b>Domaine :</b> ingénierie</p>
-            <p><b>Forces liées :</b> maths, sciences, logique</p>
-            <div class="score"><span>Score d’alignement</span><strong>90%</strong></div>
+        <object
+          class="pdf-frame"
+          data="rapport_gratuit.pdf#view=FitH"
+          type="application/pdf"
+        >
+          <div class="pdf-fallback">
+            Votre navigateur ne peut pas afficher le PDF directement.
+            <br />
+            <a href="rapport_gratuit.pdf" target="_blank" rel="noopener">Cliquez ici pour ouvrir le rapport PDF.</a>
           </div>
-          <div class="job-card orange">
-            <h3>Médecin</h3>
-            <p><b>Domaine :</b> santé</p>
-            <p><b>Forces liées :</b> sciences, régularité</p>
-            <div class="score"><span>Score d’alignement</span><strong>75%</strong></div>
-          </div>
-          <div class="job-card">
-            <h3>Développeur informatique</h3>
-            <p><b>Domaine :</b> numérique</p>
-            <p><b>Forces liées :</b> logique, résolution</p>
-            <div class="score"><span>Score d’alignement</span><strong>88%</strong></div>
-          </div>
-        </div>
-
-        <div class="example-grid">
-          <div class="card table-card">
-            <h3>Comparaison avec un profil attendu moyen</h3><br />
-            <table>
-              <tr><th>Matière</th><th>Note élève</th><th>Niveau attendu</th><th>Écart</th><th>Lecture</th></tr>
-              <tr><td>Mathématiques</td><td>16/20</td><td>16.5/20</td><td>-0.5</td><td><span class="tag yellow-tag">Proche</span></td></tr>
-              <tr><td>Français</td><td>12/20</td><td>14/20</td><td>-2</td><td><span class="tag red-tag">À renforcer</span></td></tr>
-              <tr><td>Sciences</td><td>15/20</td><td>15.5/20</td><td>-0.5</td><td><span class="tag yellow-tag">Proche</span></td></tr>
-              <tr><td>Anglais</td><td>14/20</td><td>13.5/20</td><td>+0.5</td><td><span class="tag green-tag">Au-dessus</span></td></tr>
-              <tr><td>Technologie</td><td>16/20</td><td>15/20</td><td>+1</td><td><span class="tag green-tag">Au-dessus</span></td></tr>
-            </table>
-          </div>
-
-          <div class="card radar-wrap">
-            <h3>Rosace réelle des notes</h3>
-            <div class="radar" aria-label="Rosace des notes : mathématiques 16, français 12, sciences 15, anglais 14, histoire géographie 13, technologie 16">
-              <span class="axis a1">Maths 16</span>
-              <span class="axis a2">Sciences 15</span>
-              <span class="axis a3">Anglais 14</span>
-              <span class="axis a4">Techno 16</span>
-              <span class="axis a5">H-G 13</span>
-              <span class="axis a6">Français 12</span>
-            </div>
-            <div class="legend">
-              <p><b>Lecture :</b> profil très scientifique.</p>
-              <p><b>Point d’attention :</b> français / expression écrite.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="formations-grid">
-          <div class="card table-card">
-            <h3>Formations possibles dans un rayon de 100 km</h3><br />
-            <table>
-              <tr><th>Formation</th><th>Établissement</th><th>Ville</th><th>Distance</th><th>Lecture</th></tr>
-              <tr><td>BUT Informatique</td><td>IUT de Vélizy</td><td>Vélizy</td><td>18 km</td><td>Accessible si profil scientifique confirmé</td></tr>
-              <tr><td>Licence Informatique</td><td>Paris-Saclay</td><td>Orsay</td><td>33 km</td><td>Bon alignement maths/sciences</td></tr>
-              <tr><td>Cycle ingénieur post-bac</td><td>École partenaire</td><td>Paris</td><td>22 km</td><td>Dossier à sécuriser</td></tr>
-            </table>
-          </div>
-
-          <div class="card table-card">
-            <h3>Spécialités / doublettes à viser plus tard</h3><br />
-            <table>
-              <tr><th>Objectif</th><th>Combinaisons pertinentes</th></tr>
-              <tr><td>Robotique</td><td>Mathématiques + Physique-Chimie</td></tr>
-              <tr><td>Informatique</td><td>Mathématiques + NSI</td></tr>
-              <tr><td>Ingénierie</td><td>Mathématiques + Sciences de l’ingénieur</td></tr>
-            </table>
-          </div>
-        </div>
-
-        <div class="card diagnostic">
-          <h3>Diagnostic automatique</h3>
-          <ul>
-            <li>Adam a un profil cohérent avec les métiers scientifiques et numériques.</li>
-            <li>Les mathématiques, les sciences et la technologie sont des points forts à conserver.</li>
-            <li>Le français est le levier prioritaire : il peut pénaliser plus tard les dossiers sélectifs.</li>
-            <li>Action recommandée : 20 minutes de lecture/rédaction 4 fois par semaine pendant 3 mois.</li>
-          </ul>
-          <p>Exemple fictif de rendu : l’objectif est de donner aux parents une lecture claire, pas de remplacer un conseiller.</p>
-        </div>
+        </object>
       </div>
     </div>
   </section>
