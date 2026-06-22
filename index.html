@@ -1,883 +1,1825 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cynakle - Diagnostic d'orientation gratuit</title>
-  <meta name="description" content="Recevez un diagnostic gratuit pour comprendre les chances de votre enfant selon ses notes, ses métiers visés et les formations accessibles." />
-  <script async src="https://tally.so/widgets/embed.js"></script>
-  <style>
-    :root {
-      --blue: #2563eb;
-      --blue-dark: #1d4ed8;
-      --cyan: #06b6d4;
-      --green: #16a34a;
-      --orange: #f59e0b;
-      --red: #ef4444;
-      --ink: #0f172a;
-      --muted: #64748b;
-      --line: #e2e8f0;
-      --soft: #f8fafc;
-      --white: #ffffff;
-      --shadow: 0 20px 55px rgba(15, 23, 42, 0.10);
-    }
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Cynakle - Diagnostic d'orientation scolaire gratuit</title>
+        <meta name="description" content="Rejoignez la phase de lancement Cynakle : diagnostic d'orientation personnalisé basé sur les notes, le métier visé, Parcoursup, les matières clés et les spécialités."/>
+        <script async src="https://tally.so/widgets/embed.js"></script>
+        <style>
+            :root {
+                --blue: #2563eb;
+                --blue-dark: #1d4ed8;
+                --cyan: #06b6d4;
+                --green: #16a34a;
+                --orange: #f59e0b;
+                --red: #ef4444;
+                --ink: #0f172a;
+                --muted: #64748b;
+                --line: #e2e8f0;
+                --soft: #f8fafc;
+                --white: #fff;
+                --yellow: #fbbf24;
+                --shadow: 0 20px 55px rgba(15,23,42,.10);
+                --shadow-soft: 0 12px 30px rgba(15,23,42,.07);
+            }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: var(--soft);
-      color: var(--ink);
-      line-height: 1.5;
-    }
-    a { color: inherit; }
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box
+            }
 
-    .navbar {
-      width: 100%;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--line);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-    .navbar-container {
-      max-width: 1180px;
-      margin: 0 auto;
-      padding: 14px 22px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-    }
-    .logo {
-      font-size: 25px;
-      font-weight: 900;
-      letter-spacing: -0.7px;
-      display: flex;
-      align-items: center;
-      gap: 9px;
-    }
-    .logo-dot {
-      width: 13px;
-      height: 13px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--blue), var(--cyan));
-      box-shadow: 0 0 0 6px #dbeafe;
-    }
-    .nav-links {
-      display: flex;
-      list-style: none;
-      gap: 26px;
-      align-items: center;
-      font-weight: 700;
-      color: #334155;
-      font-size: 15px;
-    }
-    .nav-links a { text-decoration: none; transition: .2s; }
-    .nav-links a:hover { color: var(--blue); }
-    .nav-cta, .primary-cta, .secondary-cta {
-      border: none;
-      cursor: pointer;
-      text-decoration: none;
-      font-weight: 900;
-      border-radius: 14px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: .2s;
-      white-space: nowrap;
-    }
-    .nav-cta {
-      background: var(--blue);
-      color: white;
-      padding: 12px 18px;
-      box-shadow: 0 10px 25px rgba(37, 99, 235, .22);
-    }
-    .nav-cta:hover, .primary-cta:hover { background: var(--blue-dark); transform: translateY(-1px); }
+            html {
+                scroll-behavior: smooth
+            }
 
-    section { scroll-margin-top: 92px; }
-    .section { padding: 72px 22px; }
-    .container { max-width: 1180px; margin: 0 auto; }
-    .section-heading { text-align: center; max-width: 860px; margin: 0 auto 42px; }
-    .eyebrow { color: var(--blue); font-weight: 900; text-transform: uppercase; letter-spacing: .08em; font-size: 13px; margin-bottom: 10px; }
-    .section-heading h2 { font-size: clamp(30px, 4vw, 46px); line-height: 1.08; letter-spacing: -1.2px; margin-bottom: 14px; }
-    .section-heading p { font-size: 19px; color: #475569; }
+            body {
+                font-family: Arial,Helvetica,sans-serif;
+                background: var(--soft);
+                color: var(--ink);
+                line-height: 1.5
+            }
 
-    .hero {
-      position: relative;
-      overflow: hidden;
-      background:
-        radial-gradient(circle at 15% 20%, rgba(37,99,235,.15), transparent 35%),
-        radial-gradient(circle at 85% 10%, rgba(6,182,212,.16), transparent 30%),
-        linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-      padding: 78px 22px 64px;
-    }
-    .hero-container {
-      max-width: 1180px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1.05fr .95fr;
-      gap: 44px;
-      align-items: center;
-    }
-    .badge-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      background: #dbeafe;
-      color: #1d4ed8;
-      padding: 8px 14px;
-      border-radius: 999px;
-      font-size: 14px;
-      font-weight: 900;
-    }
-    .badge.free { background: #dcfce7; color: #15803d; }
-    .hero h1 {
-      font-size: clamp(38px, 5vw, 64px);
-      line-height: 1.02;
-      letter-spacing: -2.2px;
-      margin-bottom: 20px;
-    }
-    .hero h1 span { color: var(--blue); }
-    .hero-subtitle {
-      font-size: 21px;
-      color: #475569;
-      max-width: 650px;
-      margin-bottom: 28px;
-    }
-    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 20px; }
-    .primary-cta { background: var(--blue); color: white; padding: 16px 22px; font-size: 16px; box-shadow: 0 18px 36px rgba(37,99,235,.24); }
-    .secondary-cta { background: white; color: var(--ink); padding: 16px 22px; border: 1px solid var(--line); }
-    .micro-proof { color: #475569; font-size: 14px; font-weight: 700; }
+            a {
+                color: inherit
+            }
 
-    .hero-side {
-      background: white;
-      border: 1px solid var(--line);
-      border-radius: 30px;
-      padding: 26px;
-      box-shadow: var(--shadow);
-    }
-    .hero-side h3 { font-size: 25px; margin-bottom: 14px; }
-    .hero-side p { color: #475569; margin-bottom: 18px; }
-    .hero-steps { display: grid; gap: 14px; }
-    .hero-step {
-      display: grid;
-      grid-template-columns: 48px 1fr;
-      gap: 14px;
-      align-items: center;
-      background: #f8fafc;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 14px;
-    }
-    .step-icon {
-      width: 48px;
-      height: 48px;
-      display: grid;
-      place-items: center;
-      border-radius: 16px;
-      background: #dbeafe;
-      font-size: 23px;
-    }
-    .hero-step strong { display: block; font-size: 16px; }
-    .hero-step span { color: var(--muted); font-size: 14px; }
-    .side-note {
-      margin-top: 16px;
-      background: #ecfdf5;
-      color: #166534;
-      border: 1px solid #bbf7d0;
-      border-radius: 18px;
-      padding: 14px;
-      font-weight: 800;
-    }
+            section {
+                scroll-margin-top: 90px
+            }
 
-    .section-transition {
-      height: 76px;
-      background: linear-gradient(180deg, transparent 0%, rgba(37,99,235,.09) 100%);
-      position: relative;
-    }
-    .section-transition:after {
-      content: "";
-      position: absolute;
-      left: 50%;
-      bottom: -18px;
-      width: 38px;
-      height: 38px;
-      transform: translateX(-50%) rotate(45deg);
-      background: white;
-      border-right: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-    }
+            .container {
+                max-width: 1160px;
+                margin: auto
+            }
 
-    .funnel-section { background: #ffffff; }
-    .funnel-wrapper{
-      display:grid;
-      grid-template-columns: 330px 260px 1fr;
-      align-items:center;
-      justify-content:center;
-      gap:34px;
-    }
-    .funnel-inputs{ display:flex; flex-direction:column; gap:18px; }
-    .input-card{
-      background:white;
-      border-radius:22px;
-      padding:22px;
-      border:1px solid var(--line);
-      box-shadow:0 12px 28px rgba(15,23,42,.06);
-      position: relative;
-    }
-    .input-card:after{
-      content:"";
-      position:absolute;
-      right:-34px;
-      top:50%;
-      width:34px;
-      height:2px;
-      background:#bfdbfe;
-    }
-    .input-card .icon{ font-size:34px; margin-bottom:8px; }
-    .input-card h3{ font-size:19px; margin-bottom:5px; }
-    .input-card p{ color:#475569; font-size:15px; }
+            .section {
+                padding: 68px 22px
+            }
 
-    .funnel-visual{ display:flex; flex-direction:column; align-items:center; }
-    .funnel-label{
-      background:#eff6ff;
-      color:#1d4ed8;
-      border:1px solid #bfdbfe;
-      border-radius:999px;
-      padding:8px 14px;
-      font-weight:900;
-      margin-bottom:12px;
-    }
-    .funnel-top{
-      width:260px;
-      height:86px;
-      background:linear-gradient(135deg,#2563eb,#06b6d4);
-      clip-path:polygon(0 0,100% 0,80% 100%,20% 100%);
-      box-shadow: 0 16px 30px rgba(37,99,235,.18);
-    }
-    .funnel-middle{
-      width:156px;
-      height:76px;
-      background:linear-gradient(135deg,#3b82f6,#2563eb);
-    }
-    .funnel-bottom{
-      width:78px;
-      height:100px;
-      background:#1d4ed8;
-      border-radius:0 0 24px 24px;
-      position: relative;
-    }
-    .funnel-bottom:after{
-      content:"";
-      position:absolute;
-      right:-92px;
-      top:50%;
-      width:90px;
-      height:2px;
-      background:#bfdbfe;
-    }
+            .navbar {
+                width: 100%;
+                background: rgba(255,255,255,.95);
+                backdrop-filter: blur(14px);
+                border-bottom: 1px solid var(--line);
+                position: sticky;
+                top: 0;
+                z-index: 1000
+            }
 
-    .report-card{
-      background:white;
-      border-radius:28px;
-      padding:30px;
-      border:1px solid var(--line);
-      box-shadow:0 20px 50px rgba(37,99,235,.12);
-    }
-    .report-icon{ font-size:50px; margin-bottom:12px; }
-    .report-card h3{ margin-bottom:16px; font-size:25px; }
-    .report-card ul{ list-style:none; padding:0; display:grid; gap:10px; }
-    .report-card li{ color:#334155; font-weight:700; }
-    .preview-btn{
-      margin-top:22px;
-      display:inline-flex;
-      background:#2563eb;
-      color:white;
-      text-decoration:none;
-      padding:14px 20px;
-      border-radius:14px;
-      font-weight:900;
-    }
+            .navbar-container {
+                max-width: 1160px;
+                margin: auto;
+                padding: 14px 22px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 18px
+            }
 
-    .comparison-section { background: linear-gradient(180deg,#ffffff 0%,#f8fafc 100%); }
-    .comparison-card {
-      background:white;
-      border:1px solid var(--line);
-      border-radius:30px;
-      padding:26px;
-      box-shadow: var(--shadow);
-      overflow:auto;
-    }
-    .comparison-table { width:100%; border-collapse:collapse; min-width:760px; }
-    .comparison-table th, .comparison-table td { padding:18px; border-bottom:1px solid var(--line); text-align:left; }
-    .comparison-table th { background:#0f172a; color:white; font-size:16px; }
-    .comparison-table td:first-child { color:#64748b; font-weight:700; }
-    .comparison-table td:last-child { color:#0f172a; font-weight:900; }
+            .logo {
+                font-size: 25px;
+                font-weight: 900;
+                letter-spacing: -.7px;
+                display: flex;
+                align-items: center;
+                gap: 9px
+            }
 
-    .report-pdf-preview { background: linear-gradient(180deg, #ffffff 0%, #eef6ff 100%); }
-    .pdf-preview-card {
-      max-width: 980px;
-      margin: 0 auto;
-      background: #ffffff;
-      border: 1px solid var(--line);
-      border-radius: 30px;
-      padding: 18px;
-      box-shadow: var(--shadow);
-    }
-    .pdf-preview-toolbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      padding: 4px 6px 16px;
-      color: #475569;
-      font-size: 14px;
-      font-weight: 700;
-    }
-    .pdf-preview-toolbar a {
-      color: var(--blue);
-      text-decoration: none;
-      font-weight: 900;
-    }
-    .pdf-frame {
-      width: 100%;
-      height: 980px;
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      background: #f8fafc;
-      display: block;
-    }
-    .pdf-fallback {
-      padding: 30px;
-      text-align: center;
-      color: #475569;
-    }
+            .logo-dot {
+                width: 13px;
+                height: 13px;
+                border-radius: 999px;
+                background: linear-gradient(135deg,var(--blue),var(--cyan));
+                box-shadow: 0 0 0 6px #dbeafe
+            }
 
-    .free-section { background: white; }
-    .offer-box {
-      background: linear-gradient(135deg, #0f172a, #1d4ed8);
-      color: white;
-      border-radius: 34px;
-      padding: 46px;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 28px;
-      align-items: center;
-      box-shadow: var(--shadow);
-    }
-    .offer-box h2 { font-size: clamp(30px, 4vw, 46px); line-height: 1.08; margin-bottom: 12px; }
-    .offer-box p { color: #dbeafe; font-size: 18px; max-width: 760px; }
-    .offer-box .primary-cta { background: white; color: #1d4ed8; }
-    .offer-box .primary-cta:hover { background: #eff6ff; }
+            .nav-links {
+                display: flex;
+                list-style: none;
+                gap: 20px;
+                align-items: center;
+                font-weight: 800;
+                color: #334155;
+                font-size: 14px
+            }
 
-    .faq-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-    .faq-card {
-      background:white;
-      border:1px solid var(--line);
-      border-radius:24px;
-      padding:26px;
-      box-shadow:0 14px 32px rgba(15,23,42,.06);
-    }
-    .faq-card h3 { font-size: 19px; margin-bottom: 8px; }
-    .faq-card p { color: #475569; }
+            .nav-links a {
+                text-decoration: none
+            }
 
-    .footer { padding: 32px 22px; background: #0f172a; color: #cbd5e1; text-align: center; }
-    .footer b { color: white; }
+            .nav-links a:hover {
+                color: var(--blue)
+            }
 
-    @media (max-width: 1000px) {
-      .hero-container, .funnel-wrapper, .offer-box { grid-template-columns: 1fr; }
-      .funnel-wrapper {
-        gap: 26px;
-        max-width: 560px;
-        margin: 0 auto;
-      }
-      .input-card:after, .funnel-bottom:after { display:none; }
-      .funnel-inputs { width: 100%; }
-      .input-card { text-align: left; }
-      .funnel-visual {
-        transform: none;
-        margin: 4px auto;
-        position: relative;
-      }
-      .funnel-visual:before,
-      .funnel-visual:after {
-        content: "↓";
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 34px;
-        height: 34px;
-        margin: 0 auto 10px;
-        border-radius: 999px;
-        background: #eff6ff;
-        color: #1d4ed8;
-        font-weight: 900;
-        border: 1px solid #bfdbfe;
-      }
-      .funnel-visual:after {
-        margin: 12px auto 0;
-      }
-      .funnel-top { width: 240px; height: 72px; }
-      .funnel-middle { width: 144px; height: 62px; }
-      .funnel-bottom { width: 70px; height: 76px; }
-      .report-card {
-        margin-top: 0;
-        width: 100%;
-      }
-    }
-    @media (max-width: 950px) {
-      .nav-links { display: none; }
-      .hero { padding-top: 44px; }
-      .pdf-frame { height: 760px; }
-      .pdf-preview-toolbar { align-items: flex-start; flex-direction: column; }
-      .faq-grid { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 560px) {
-      .navbar-container { flex-wrap: wrap; justify-content: center; }
-      .nav-cta { width: 100%; }
-      .hero-actions a, .hero-actions button { width: 100%; }
-      .hero-side { padding: 20px; }
-      .funnel-visual { transform: none; }
-      .funnel-top { width: 210px; height: 64px; }
-      .funnel-middle { width: 126px; height: 56px; }
-      .funnel-bottom { width: 62px; height: 68px; }
-      .report-card { padding: 24px; }
-      .offer-box { padding: 30px; }
-    }
+            button,.btn {
+                border: none;
+                cursor: pointer;
+                text-decoration: none;
+                font-weight: 900;
+                border-radius: 14px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                transition: .2s;
+                white-space: nowrap
+            }
 
-    /* Sections confiance, mentions légales et cookies */
-    .about-section { background: #ffffff; }
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 24px;
-      align-items: stretch;
-    }
-    .about-card, .trust-card, .legal-card {
-      background: #ffffff;
-      border: 1px solid var(--line);
-      border-radius: 28px;
-      padding: 30px;
-      box-shadow: 0 16px 38px rgba(15,23,42,.07);
-    }
-    .about-card p, .trust-card p, .legal-card p, .legal-card li {
-      color: #475569;
-      font-size: 16px;
-      line-height: 1.7;
-    }
-    .about-card strong { color: var(--ink); }
-    .trust-list { list-style: none; padding: 0; display: grid; gap: 12px; margin-top: 18px; }
-    .trust-list li {
-      background: #f8fafc;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 14px 16px;
-      font-weight: 800;
-      color: #334155;
-    }
-    .mission-box {
-      margin-top: 20px;
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      color: #1e40af;
-      border-radius: 18px;
-      padding: 18px;
-      font-weight: 900;
-    }
-    .legal-section { background: linear-gradient(180deg,#f8fafc 0%,#ffffff 100%); }
-    .legal-grid { display: grid; grid-template-columns: 1fr; gap: 16px; max-width: 1000px; margin: 0 auto; }
-    .legal-card details {
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 18px 20px;
-      background: #ffffff;
-    }
-    .legal-card details + details { margin-top: 14px; }
-    .legal-card summary {
-      cursor: pointer;
-      font-size: 19px;
-      font-weight: 900;
-      color: var(--ink);
-    }
-    .legal-content { margin-top: 16px; display: grid; gap: 12px; }
-    .legal-content ul { padding-left: 20px; }
-    .legal-content h4 { margin-top: 10px; font-size: 16px; color: var(--ink); }
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin-top: 14px;
-      font-size: 14px;
-    }
-    .footer-links a { color: #dbeafe; text-decoration: none; font-weight: 700; }
-    .footer-links a:hover { text-decoration: underline; }
-    .cookie-banner {
-      position: fixed;
-      left: 20px;
-      right: 20px;
-      bottom: 20px;
-      z-index: 10000;
-      max-width: 920px;
-      margin: 0 auto;
-      background: #0f172a;
-      color: #ffffff;
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 22px;
-      padding: 18px;
-      box-shadow: 0 22px 60px rgba(15,23,42,.35);
-      display: none;
-      gap: 18px;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .cookie-banner.show { display: flex; }
-    .cookie-banner p { color: #cbd5e1; font-size: 14px; line-height: 1.5; }
-    .cookie-banner a { color: #93c5fd; font-weight: 900; text-decoration: none; }
-    .cookie-actions { display: flex; gap: 10px; flex-wrap: wrap; }
-    .cookie-btn {
-      border: none;
-      cursor: pointer;
-      border-radius: 999px;
-      padding: 12px 16px;
-      font-weight: 900;
-      white-space: nowrap;
-    }
-    .cookie-accept { background: #2563eb; color: #fff; }
-    .cookie-secondary { background: #ffffff; color: #0f172a; }
-    @media (max-width: 950px) {
-      .about-grid { grid-template-columns: 1fr; }
-      .cookie-banner { flex-direction: column; align-items: flex-start; }
-    }
-    @media (max-width: 560px) {
-      .cookie-banner { left: 12px; right: 12px; bottom: 82px; }
-      .cookie-actions, .cookie-btn { width: 100%; }
-    }
+            .nav-cta,.primary-cta {
+                background: var(--blue);
+                color: white;
+                padding: 13px 18px;
+                box-shadow: 0 12px 28px rgba(37,99,235,.24)
+            }
 
-  </style>
-</head>
-<body>
-  <nav class="navbar">
-    <div class="navbar-container">
-      <div class="logo"><span class="logo-dot"></span>Cynakle</div>
-      <ul class="nav-links">
-        <li><a href="#comment-marche">Comment ça marche</a></li>
-        <li><a href="#difference">Différence</a></li>
-        <li><a href="#exemple">Rapport</a></li>
-        <li><a href="#diagnostic">Diagnostic gratuit</a></li>
-        <li><a href="#qui-sommes-nous">Qui sommes-nous</a></li>
-        <li><a href="#faq">FAQ</a></li>
-      </ul>
-      <button class="nav-cta" data-tally-open="RGvR9j" data-tally-layout="modal" data-tally-width="760" data-tally-emoji-text="🎯" data-tally-emoji-animation="wave">
-        Recevoir un diagnostic gratuit
-      </button>
-    </div>
-  </nav>
+            .nav-cta:hover,.primary-cta:hover {
+                background: var(--blue-dark);
+                transform: translateY(-1px)
+            }
 
-  <header class="hero">
-    <div class="hero-container">
-      <div>
-        <div class="badge-row">
-          <span class="badge free">✅ Gratuit pour les premiers parents</span>
-          <span class="badge">📄 Rapport sous 48h</span>
-          <span class="badge">🔍 Vérification manuelle</span>
-        </div>
-        <h1>Votre enfant rêve d’un métier ? <span>Découvrez s’il est sur le bon chemin.</span></h1>
-        <p class="hero-subtitle">
-          À partir de ses notes, de sa classe, de sa ville et des métiers qui l’intéressent, recevez un rapport clair pour comprendre ses forces, ses écarts et les formations à viser.
-        </p>
-        <div class="hero-actions">
-          <button class="primary-cta" data-tally-open="RGvR9j" data-tally-layout="modal" data-tally-width="760" data-tally-emoji-text="🎯" data-tally-emoji-animation="wave">
-            Recevoir mon diagnostic gratuit
-          </button>
-          <a class="secondary-cta" href="#exemple">Voir le rapport exemple</a>
-        </div>
-        <p class="micro-proof">Sans engagement · Utile dès le collège · Pensé pour les parents</p>
-      </div>
+            .secondary-cta {
+                background: #fff;
+                color: var(--ink);
+                padding: 16px 22px;
+                border: 1px solid var(--line)
+            }
 
-      <div class="hero-side">
-        <h3>Comment ça marche ?</h3>
-        <p>Un parcours simple : vous renseignez quelques informations, nous les transformons en rapport d’orientation lisible.</p>
-        <div class="hero-steps">
-          <div class="hero-step"><div class="step-icon">📚</div><div><strong>1. Notes scolaires</strong><span>Les principales matières de l’élève.</span></div></div>
-          <div class="hero-step"><div class="step-icon">🎯</div><div><strong>2. Métiers visés</strong><span>Les métiers qui motivent votre enfant.</span></div></div>
-          <div class="hero-step"><div class="step-icon">📍</div><div><strong>3. Ville</strong><span>Pour identifier les formations proches.</span></div></div>
-          <div class="hero-step"><div class="step-icon">📄</div><div><strong>4. Rapport PDF</strong><span>Disponible sous 48h après vérification.</span></div></div>
-        </div>
-        <div class="side-note">Objectif : savoir quoi renforcer en priorité pour avancer.</div>
-      </div>
-    </div>
-  </header>
+            .mobile-menu-btn {
+                display: none;
+                background: white;
+                color: #0f172a;
+                border: 1px solid #e2e8f0;
+                border-radius: 14px;
+                padding: 12px 16px;
+                font-size: 24px;
+                font-weight: 900
+            }
 
-  <div class="section-transition"></div>
+            .hero {
+                background: radial-gradient(circle at 15% 20%,rgba(239,68,68,.13),transparent 32%),radial-gradient(circle at 85% 8%,rgba(37,99,235,.16),transparent 34%),linear-gradient(180deg,#fff 0%,#f8fafc 100%);
+                padding: 70px 22px 58px
+            }
 
-  <section id="comment-marche" class="section funnel-section">
-    <div class="container">
-      <div class="section-heading">
-        <div class="eyebrow">Méthode Cynakle</div>
-        <h2>Un entonnoir qui transforme les notes en décisions concrètes</h2>
-        <p>Plusieurs informations entrent dans l’analyse. À la sortie : un rapport personnalisé, clair et actionnable.</p>
-      </div>
+            .hero-container {
+                max-width: 1160px;
+                margin: auto;
+                display: grid;
+                grid-template-columns: 1.08fr .92fr;
+                gap: 42px;
+                align-items: center
+            }
 
-      <div class="funnel-wrapper">
-        <div class="funnel-inputs">
-          <div class="input-card"><div class="icon">📚</div><h3>Notes scolaires</h3><p>Mathématiques, français, sciences, anglais, technologie...</p></div>
-          <div class="input-card"><div class="icon">🎯</div><h3>Métiers envisagés</h3><p>Ingénieur, médecin, développeur, avocat, architecte...</p></div>
-          <div class="input-card"><div class="icon">📍</div><h3>Ville de résidence</h3><p>Pour repérer les formations accessibles dans votre zone.</p></div>
-        </div>
+            .badge-row {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                margin-bottom: 18px
+            }
 
-        <div class="funnel-visual">
-          <div class="funnel-label">Analyse</div>
-          <div class="funnel-top"></div>
-          <div class="funnel-middle"></div>
-          <div class="funnel-bottom"></div>
-        </div>
+            .badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 7px;
+                background: #dbeafe;
+                color: #1d4ed8;
+                padding: 8px 14px;
+                border-radius: 999px;
+                font-size: 14px;
+                font-weight: 900
+            }
 
-        <div class="report-card">
-          <div class="report-icon">📄</div>
-          <h3>Rapport personnalisé</h3>
-          <ul>
-            <li>✓ Analyse des notes matière par matière</li>
-            <li>✓ Compatibilité avec les métiers visés</li>
-            <li>✓ Comparaison avec les profils attendus</li>
-            <li>✓ Tension des métiers 2024 / 2030</li>
-            <li>✓ Impact potentiel de l’IA</li>
-            <li>✓ Formations proches de chez vous</li>
-            <li>✓ Recommandations concrètes de progression</li>
-          </ul>
-          <a href="#exemple" class="preview-btn">Voir le rapport exemple</a>
-        </div>
-      </div>
-    </div>
-  </section>
+            .badge.free {
+                background: #dcfce7;
+                color: #15803d
+            }
 
-  <section id="difference" class="section comparison-section">
-    <div class="container">
-      <div class="section-heading">
-        <div class="eyebrow">Pourquoi c’est différent</div>
-        <h2>Un diagnostic plus concret qu’un conseil d’orientation classique</h2>
-        <p>Le but n’est pas de remplacer un conseiller, mais de donner aux parents une lecture claire et exploitable.</p>
-      </div>
+            .badge.warn {
+                background: #fee2e2;
+                color: #b91c1c
+            }
 
-      <div class="comparison-card">
-        <table class="comparison-table">
-          <tr><th>Orientation classique</th><th>Cynakle</th></tr>
-          <tr><td>Conseils souvent généraux</td><td>Diagnostic personnalisé selon les notes, la ville et les métiers visés</td></tr>
-          <tr><td>Basé surtout sur des échanges et impressions</td><td>Lecture structurée matière par matière</td></tr>
-          <tr><td>Peu de visibilité sur les formations futures</td><td>Projection vers les formations et spécialités pertinentes</td></tr>
-          <tr><td>Recommandations parfois vagues</td><td>Plan d’action concret : quoi renforcer, pourquoi et dans quel ordre</td></tr>
-          <tr><td>Peu de lien avec le marché du travail</td><td>Ajout de la tension métier 2024 / 2030 et de l’impact IA</td></tr>
-        </table>
-      </div>
-    </div>
-  </section>
+            .hero h1 {
+                font-size: clamp(38px,5vw,62px);
+                line-height: 1.02;
+                letter-spacing: -2.2px;
+                margin-bottom: 20px
+            }
 
-  <div class="section-transition"></div>
+            .hero h1 span {
+                color: var(--blue)
+            }
 
-  <section id="exemple" class="section report-pdf-preview">
-    <div class="container">
-      <div class="section-heading">
-        <div class="eyebrow">Rapport détaillé</div>
-        <h2>Voici exactement le type de rapport que vous recevrez</h2>
-        <p>Le rapport est intégré en prévisualisation. Le fichier doit s’appeler <b>rapport_gratuit.pdf</b> et être placé dans le même dossier que cette page HTML.</p>
-      </div>
+            .hero-subtitle {
+                font-size: 21px;
+                color: #475569;
+                max-width: 680px;
+                margin-bottom: 16px
+            }
 
-      <div class="pdf-preview-card">
-        <div class="pdf-preview-toolbar">
-          <span>Aperçu du rapport d’orientation</span>
-          <a href="rapport_gratuit.pdf" target="_blank" rel="noopener">Ouvrir le PDF</a>
-        </div>
+            .hero-fast {
+                background: #eff6ff;
+                border: 1px solid #bfdbfe;
+                color: #1e40af;
+                border-radius: 18px;
+                padding: 15px 17px;
+                font-weight: 900;
+                margin-bottom: 14px
+            }
 
-        <object class="pdf-frame" data="rapport_gratuit.pdf#view=FitH" type="application/pdf">
-          <div class="pdf-fallback">
-            Votre navigateur ne peut pas afficher le PDF directement.<br />
-            <a href="rapport_gratuit.pdf" target="_blank" rel="noopener">Cliquez ici pour ouvrir le rapport PDF.</a>
-          </div>
-        </object>
-      </div>
-    </div>
-  </section>
+            .hero-proof {
+                background: #fff7ed;
+                border: 1px solid #fed7aa;
+                color: #9a3412;
+                border-radius: 18px;
+                padding: 15px 17px;
+                font-weight: 900;
+                margin-bottom: 22px
+            }
 
-  <div class="section-transition"></div>
+            .hero-actions {
+                display: flex;
+                gap: 14px;
+                flex-wrap: wrap;
+                margin-bottom: 14px
+            }
 
-  <section id="diagnostic" class="section free-section">
-    <div class="container">
-      <div class="offer-box">
-        <div>
-          <h2>Recevez gratuitement votre premier diagnostic</h2>
-          <p>Vous indiquez la classe, les notes principales, la ville et les métiers envisagés. Nous vous retournons une lecture claire sous 48h, après vérification manuelle.</p>
-        </div>
-        <button class="primary-cta" data-tally-open="RGvR9j" data-tally-layout="modal" data-tally-width="760" data-tally-emoji-text="🎯" data-tally-emoji-animation="wave">
-          Ouvrir le formulaire gratuit
-        </button>
-      </div>
-    </div>
-  </section>
+            .primary-cta {
+                padding: 16px 22px;
+                font-size: 16px
+            }
 
+            .micro-proof {
+                color: #475569;
+                font-size: 14px;
+                font-weight: 800
+            }
 
-  <section id="qui-sommes-nous" class="section about-section">
-    <div class="container">
-      <div class="section-heading">
-        <div class="eyebrow">Qui sommes-nous ?</div>
-        <h2>Cynakle, l’outil d’orientation scolaire assisté par l’IA</h2>
-        <p>Notre mission est d’aider les parents à comprendre plus clairement les parcours possibles de leur enfant.</p>
-      </div>
+            .micro-proof b {
+                color: var(--ink)
+            }
 
-      <div class="about-grid">
-        <div class="about-card">
-          <p><strong>Cynakle</strong> est une plateforme d’aide à l’orientation scolaire assistée par l’intelligence artificielle. Le service s’adresse aux parents qui souhaitent mieux comprendre les forces scolaires de leur enfant, les métiers qu’il vise et les formations qui pourraient correspondre à son profil.</p>
-          <br />
-          <p>À partir des notes, de la classe, de la ville et des métiers envisagés, Cynakle produit un rapport personnalisé, lisible et actionnable. Le rapport est fourni sous 48h afin de permettre une vérification manuelle avant envoi.</p>
-          <div class="mission-box">🎯 Notre objectif : rendre l’orientation plus claire, plus personnalisée et plus accessible aux familles.</div>
-        </div>
+            .hero-card {
+                background: white;
+                border: 1px solid var(--line);
+                border-radius: 30px;
+                padding: 26px;
+                box-shadow: var(--shadow)
+            }
 
-        <div class="trust-card">
-          <h3>Ce que Cynakle analyse</h3>
-          <ul class="trust-list">
-            <li>✓ Les notes et matières fortes</li>
-            <li>✓ Les métiers envisagés par la famille</li>
-            <li>✓ Les écarts avec les profils attendus</li>
-            <li>✓ Les formations accessibles selon la ville</li>
-            <li>✓ La tension du métier et l’impact de l’IA</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
+            .hero-card h3 {
+                font-size: 25px;
+                margin-bottom: 12px
+            }
 
-  <section id="informations-legales" class="section legal-section">
-    <div class="container">
-      <div class="section-heading">
-        <div class="eyebrow">Informations légales</div>
-        <h2>Transparence, données personnelles et conditions d’utilisation</h2>
-        <p>Les informations ci-dessous présentent l’éditeur du site, l’utilisation des données, les cookies et les conditions d’utilisation du service.</p>
-      </div>
+            .mini-report {
+                display: grid;
+                gap: 12px;
+                margin-top: 16px
+            }
 
-      <div class="legal-grid">
-        <div class="legal-card">
-          <details id="mentions-legales" open>
-            <summary>Mentions légales</summary>
-            <div class="legal-content">
-              <p><strong>Éditeur du site :</strong> CYNAKLE, société par actions simplifiée, immatriculée au RCS de Nanterre.</p>
-              <p><strong>SIREN :</strong> 928 312 669 — <strong>SIRET :</strong> 928 312 669 00015.</p>
-              <p><strong>Siège social :</strong> Bâtiment Bourgogne, 19 rue des 4 Vents, 92380 Garches, France.</p>
-              <p><strong>Président :</strong> CYNAKLE HOLDING.</p>
-              <p><strong>Contact :</strong> <a href="mailto:contact@cynakle.com">contact@cynakle.com</a>.</p>
-              <p><strong>Site :</strong> cynakle.com.</p>
-              <p><strong>Hébergement / formulaire :</strong> les formulaires sont opérés via Tally.so. Les données collectées via les formulaires sont traitées dans le cadre de la demande de diagnostic.</p>
+            .mini-line {
+                display: grid;
+                grid-template-columns: 42px 1fr;
+                gap: 12px;
+                align-items: center;
+                background: #f8fafc;
+                border: 1px solid var(--line);
+                border-radius: 16px;
+                padding: 13px
+            }
+
+            .mini-line .ico {
+                font-size: 24px
+            }
+
+            .mini-line strong {
+                display: block
+            }
+
+            .mini-line span {
+                display: block;
+                color: var(--muted);
+                font-size: 14px
+            }
+
+            .alert-mini {
+                margin-top: 16px;
+                background: #fee2e2;
+                color: #991b1b;
+                border: 1px solid #fecaca;
+                border-radius: 18px;
+                padding: 14px;
+                font-weight: 900
+            }
+
+            .section-heading {
+                text-align: center;
+                max-width: 860px;
+                margin: 0 auto 36px
+            }
+
+            .eyebrow {
+                color: var(--blue);
+                font-weight: 900;
+                text-transform: uppercase;
+                letter-spacing: .08em;
+                font-size: 13px;
+                margin-bottom: 10px
+            }
+
+            .section-heading h2 {
+                font-size: clamp(30px,4vw,46px);
+                line-height: 1.08;
+                letter-spacing: -1.2px;
+                margin-bottom: 14px
+            }
+
+            .section-heading p {
+                font-size: 19px;
+                color: #475569
+            }
+
+            .outcomes {
+                background: #fff
+            }
+
+            .outcome-grid {
+                display: grid;
+                grid-template-columns: repeat(5,1fr);
+                gap: 14px
+            }
+
+            .outcome-card {
+                background: #fff;
+                border: 1px solid var(--line);
+                border-radius: 22px;
+                padding: 20px;
+                box-shadow: var(--shadow-soft)
+            }
+
+            .outcome-card .icon {
+                font-size: 30px;
+                margin-bottom: 9px
+            }
+
+            .outcome-card h3 {
+                font-size: 18px;
+                margin-bottom: 8px
+            }
+
+            .outcome-card p {
+                color: #475569;
+                font-size: 15px
+            }
+
+            .level-choice {
+                background: linear-gradient(180deg,#fff 0%,#eef6ff 100%)
+            }
+
+            .level-grid {
+                display: grid;
+                grid-template-columns: repeat(4,1fr);
+                gap: 16px
+            }
+
+            .level-card {
+                background: white;
+                border: 1px solid var(--line);
+                border-radius: 24px;
+                padding: 22px;
+                box-shadow: var(--shadow-soft)
+            }
+
+            .level-card .level-icon {
+                font-size: 34px;
+                margin-bottom: 9px
+            }
+
+            .level-card h3 {
+                font-size: 20px;
+                margin-bottom: 8px
+            }
+
+            .level-card p {
+                color: #475569
+            }
+
+            .level-card small {
+                display: block;
+                margin-top: 14px;
+                color: #1e40af;
+                background: #eff6ff;
+                border: 1px solid #bfdbfe;
+                border-radius: 14px;
+                padding: 12px;
+                font-weight: 800;
+                line-height: 1.45
+            }
+
+            .level-card .mini-cta {
+                margin-top: 16px;
+                width: 100%;
+                background: #0f172a;
+                color: #fff;
+                padding: 12px 14px;
+                border-radius: 14px;
+                font-size: 14px
+            }
+
+            .risk-section {
+                background: #fff
+            }
+
+            .risk-box {
+                background: linear-gradient(135deg,#fff7ed,#ffffff);
+                border: 1px solid #fed7aa;
+                border-radius: 30px;
+                padding: 34px;
+                box-shadow: var(--shadow)
+            }
+
+            .risk-title {
+                text-align: center;
+                max-width: 900px;
+                margin: 0 auto 26px
+            }
+
+            .risk-title h2 {
+                font-size: clamp(30px,4vw,46px);
+                line-height: 1.08;
+                letter-spacing: -1.1px;
+                margin-bottom: 12px
+            }
+
+            .risk-title p {
+                font-size: 19px;
+                color: #7c2d12
+            }
+
+            .risk-grid {
+                display: grid;
+                grid-template-columns: repeat(4,1fr);
+                gap: 16px
+            }
+
+            .risk-card {
+                background: white;
+                border: 1px solid #fed7aa;
+                border-radius: 22px;
+                padding: 20px
+            }
+
+            .risk-card .icon {
+                font-size: 34px;
+                margin-bottom: 8px
+            }
+
+            .risk-card h3 {
+                font-size: 19px;
+                margin-bottom: 8px
+            }
+
+            .risk-card p {
+                color: #475569
+            }
+
+            .truth {
+                margin-top: 24px;
+                background: #0f172a;
+                color: white;
+                border-radius: 22px;
+                padding: 22px;
+                text-align: center;
+                font-size: 22px;
+                font-weight: 900
+            }
+
+            .truth span {
+                color: #fbbf24
+            }
+
+            .examples {
+                background: #f8fafc
+            }
+
+            .job-grid {
+                display: grid;
+                grid-template-columns: repeat(3,1fr);
+                gap: 18px
+            }
+
+            .job-card {
+                background: #fff;
+                border: 1px solid var(--line);
+                border-radius: 26px;
+                padding: 24px;
+                box-shadow: var(--shadow-soft)
+            }
+
+            .job-card h3 {
+                font-size: 22px;
+                margin-bottom: 10px
+            }
+
+            .job-card ul {
+                list-style: none;
+                display: grid;
+                gap: 10px;
+                color: #334155;
+                font-weight: 800
+            }
+
+            .job-card li {
+                background: #f8fafc;
+                border: 1px solid var(--line);
+                border-radius: 14px;
+                padding: 11px
+            }
+
+            .help-section {
+                background: #fff
+            }
+
+            .help-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 24px;
+                align-items: stretch
+            }
+
+            .help-card,.result-card {
+                background: white;
+                border: 1px solid var(--line);
+                border-radius: 28px;
+                padding: 28px;
+                box-shadow: var(--shadow)
+            }
+
+            .check-list {
+                list-style: none;
+                display: grid;
+                gap: 13px;
+                margin-top: 16px
+            }
+
+            .check-list li {
+                background: #f8fafc;
+                border: 1px solid var(--line);
+                border-radius: 16px;
+                padding: 14px 16px;
+                font-weight: 800;
+                color: #334155
+            }
+
+            .check-list li b {
+                color: var(--ink)
+            }
+
+            .result-sample {
+                display: grid;
+                gap: 12px;
+                margin-top: 16px
+            }
+
+            .sample-row {
+                display: flex;
+                justify-content: space-between;
+                gap: 14px;
+                align-items: center;
+                border-bottom: 1px solid var(--line);
+                padding-bottom: 12px
+            }
+
+            .sample-row:last-child {
+                border-bottom: none
+            }
+
+            .pill {
+                padding: 7px 10px;
+                border-radius: 999px;
+                font-size: 13px;
+                font-weight: 900
+            }
+
+            .pill.orange {
+                background: #fef3c7;
+                color: #b45309
+            }
+
+            .pill.green {
+                background: #dcfce7;
+                color: #15803d
+            }
+
+            .pill.red {
+                background: #fee2e2;
+                color: #b91c1c
+            }
+
+            .pill.blue {
+                background: #dbeafe;
+                color: #1d4ed8
+            }
+
+            .credibility {
+                background: linear-gradient(180deg,#ffffff 0%,#f8fafc 100%)
+            }
+
+            .cred-grid {
+                display: grid;
+                grid-template-columns: repeat(3,1fr);
+                gap: 18px
+            }
+
+            .cred-card {
+                background: white;
+                border: 1px solid var(--line);
+                border-radius: 24px;
+                padding: 22px;
+                box-shadow: var(--shadow-soft)
+            }
+
+            .cred-card h3 {
+                font-size: 20px;
+                margin-bottom: 8px
+            }
+
+            .cred-card p {
+                color: #475569
+            }
+
+            .disclaimer {
+                margin-top: 22px;
+                background: #eff6ff;
+                border: 1px solid #bfdbfe;
+                color: #1e40af;
+                border-radius: 22px;
+                padding: 18px;
+                text-align: center;
+                font-weight: 900
+            }
+
+            .comparison-section {
+                background: #fff
+            }
+
+            .comparison-card {
+                background: white;
+                border: 1px solid var(--line);
+                border-radius: 30px;
+                padding: 26px;
+                box-shadow: var(--shadow);
+                overflow: auto
+            }
+
+            .comparison-table {
+                width: 100%;
+                border-collapse: collapse;
+                min-width: 760px
+            }
+
+            .comparison-table th,.comparison-table td {
+                padding: 18px;
+                border-bottom: 1px solid var(--line);
+                text-align: left
+            }
+
+            .comparison-table th {
+                background: #0f172a;
+                color: white;
+                font-size: 16px
+            }
+
+            .comparison-table td:first-child {
+                color: #64748b;
+                font-weight: 800
+            }
+
+            .comparison-table td:last-child {
+                color: #0f172a;
+                font-weight: 900
+            }
+
+            .comparison-table tr:last-child td {
+                border-bottom: none
+            }
+
+            .mid-cta {
+                background: #0f172a;
+                color: white
+            }
+
+            .mid-cta-box {
+                display: grid;
+                grid-template-columns: 1fr auto;
+                gap: 24px;
+                align-items: center
+            }
+
+            .mid-cta h2 {
+                font-size: clamp(28px,4vw,42px);
+                line-height: 1.08;
+                margin-bottom: 10px
+            }
+
+            .mid-cta p {
+                color: #cbd5e1;
+                font-size: 18px
+            }
+
+            .mid-cta .primary-cta {
+                background: white;
+                color: #1d4ed8
+            }
+
+            .report-pdf-preview {
+                background: linear-gradient(180deg,#fff 0%,#eef6ff 100%)
+            }
+
+            .pdf-preview-card {
+                max-width: 980px;
+                margin: auto;
+                background: white;
+                border: 1px solid var(--line);
+                border-radius: 30px;
+                padding: 18px;
+                box-shadow: var(--shadow)
+            }
+
+            .pdf-preview-toolbar {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 16px;
+                padding: 4px 6px 16px;
+                color: #475569;
+                font-size: 14px;
+                font-weight: 800
+            }
+
+            .pdf-preview-toolbar a {
+                color: var(--blue);
+                text-decoration: none;
+                font-weight: 900
+            }
+
+            .pdf-frame {
+                width: 100%;
+                height: 720px;
+                border: 1px solid var(--line);
+                border-radius: 22px;
+                background: #f8fafc;
+                display: block
+            }
+
+            .pdf-fallback {
+                padding: 30px;
+                text-align: center;
+                color: #475569
+            }
+
+            .faq {
+                background: #fff
+            }
+
+            .faq-card {
+                max-width: 900px;
+                margin: auto;
+                display: grid;
+                gap: 12px
+            }
+
+            .faq details {
+                background: #fff;
+                border: 1px solid var(--line);
+                border-radius: 18px;
+                padding: 18px 20px;
+                box-shadow: 0 10px 24px rgba(15,23,42,.04)
+            }
+
+            .faq summary {
+                cursor: pointer;
+                font-size: 18px;
+                font-weight: 900
+            }
+
+            .faq p {
+                margin-top: 12px;
+                color: #475569;
+                line-height: 1.65
+            }
+
+            .cta-section {
+                background: white
+            }
+
+            .offer-box {
+                background: linear-gradient(135deg,#0f172a,#1d4ed8);
+                color: white;
+                border-radius: 34px;
+                padding: 44px;
+                display: grid;
+                grid-template-columns: 1fr auto;
+                gap: 28px;
+                align-items: center;
+                box-shadow: var(--shadow)
+            }
+
+            .offer-box h2 {
+                font-size: clamp(30px,4vw,46px);
+                line-height: 1.08;
+                margin-bottom: 12px
+            }
+
+            .offer-box p {
+                color: #dbeafe;
+                font-size: 18px;
+                max-width: 760px
+            }
+
+            .offer-box .primary-cta {
+                background: white;
+                color: #1d4ed8
+            }
+
+            .cta-points {
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+                margin-top: 14px
+            }
+
+            .cta-points span {
+                background: rgba(255,255,255,.12);
+                border: 1px solid rgba(255,255,255,.18);
+                padding: 8px 12px;
+                border-radius: 999px;
+                font-weight: 900;
+                color: #fff
+            }
+
+            .legal-section {
+                background: #f8fafc
+            }
+
+            .legal-card {
+                background: white;
+                border: 1px solid var(--line);
+                border-radius: 28px;
+                padding: 28px;
+                box-shadow: 0 16px 38px rgba(15,23,42,.07);
+                max-width: 1000px;
+                margin: auto
+            }
+
+            .legal-card details {
+                border: 1px solid var(--line);
+                border-radius: 18px;
+                padding: 18px 20px;
+                background: #fff
+            }
+
+            .legal-card details+details {
+                margin-top: 14px
+            }
+
+            .legal-card summary {
+                cursor: pointer;
+                font-size: 19px;
+                font-weight: 900
+            }
+
+            .legal-content {
+                margin-top: 16px;
+                display: grid;
+                gap: 12px;
+                color: #475569;
+                line-height: 1.7
+            }
+
+            .legal-content ul {
+                padding-left: 20px
+            }
+
+            .footer {
+                padding: 30px 22px;
+                background: #0f172a;
+                color: #cbd5e1;
+                text-align: center
+            }
+
+            .footer b {
+                color: white
+            }
+
+            .footer-links {
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 16px;
+                margin-top: 14px;
+                font-size: 14px
+            }
+
+            .footer-links a {
+                color: #dbeafe;
+                text-decoration: none;
+                font-weight: 800
+            }
+
+            .cookie-banner {
+                position: fixed;
+                left: 20px;
+                right: 20px;
+                bottom: 20px;
+                z-index: 10000;
+                max-width: 920px;
+                margin: 0 auto;
+                background: #0f172a;
+                color: white;
+                border: 1px solid rgba(255,255,255,.12);
+                border-radius: 22px;
+                padding: 18px;
+                box-shadow: 0 22px 60px rgba(15,23,42,.35);
+                display: none;
+                gap: 18px;
+                align-items: center;
+                justify-content: space-between
+            }
+
+            .cookie-banner.show {
+                display: flex
+            }
+
+            .cookie-banner p {
+                color: #cbd5e1;
+                font-size: 14px
+            }
+
+            .cookie-banner a {
+                color: #93c5fd;
+                font-weight: 900;
+                text-decoration: none
+            }
+
+            .cookie-actions {
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap
+            }
+
+            .cookie-btn {
+                border: none;
+                cursor: pointer;
+                border-radius: 999px;
+                padding: 12px 16px;
+                font-weight: 900;
+                white-space: nowrap
+            }
+
+            .cookie-accept {
+                background: #2563eb;
+                color: white
+            }
+
+            .cookie-secondary {
+                background: white;
+                color: #0f172a
+            }
+
+            .pilot-benefits {
+                background: #fff
+            }
+
+            .benefit-box {
+                background: linear-gradient(135deg,#eff6ff,#ffffff);
+                border: 1px solid #bfdbfe;
+                border-radius: 30px;
+                padding: 34px;
+                box-shadow: var(--shadow)
+            }
+
+            .benefit-grid {
+                display: grid;
+                grid-template-columns: repeat(3,1fr);
+                gap: 18px;
+                margin-top: 22px
+            }
+
+            .benefit-card {
+                background: #fff;
+                border: 1px solid var(--line);
+                border-radius: 22px;
+                padding: 22px;
+                box-shadow: var(--shadow-soft)
+            }
+
+            .benefit-card h3 {
+                font-size: 20px;
+                margin-bottom: 8px
+            }
+
+            .benefit-card p {
+                color: #475569
+            }
+
+            .launch-note {
+                margin-top: 20px;
+                background: #0f172a;
+                color: #fff;
+                border-radius: 20px;
+                padding: 18px;
+                text-align: center;
+                font-weight: 900
+            }
+
+            .sticky-mobile-cta {
+                display: none;
+                position: fixed;
+                left: 12px;
+                right: 12px;
+                bottom: 12px;
+                z-index: 9999;
+                background: var(--blue);
+                color: #fff;
+                padding: 14px 18px;
+                border-radius: 16px;
+                box-shadow: 0 14px 35px rgba(37,99,235,.35);
+                font-weight: 900;
+                text-align: center;
+                text-decoration: none;
+                justify-content: center
+            }
+
+            .form-preview {
+                background: #fff
+            }
+
+            .form-grid {
+                display: grid;
+                grid-template-columns: repeat(2,1fr);
+                gap: 14px;
+                max-width: 900px;
+                margin: auto
+            }
+
+            .form-q {
+                background: #f8fafc;
+                border: 1px solid var(--line);
+                border-radius: 18px;
+                padding: 18px;
+                font-weight: 900;
+                color: #334155
+            }
+
+            .form-q span {
+                display: block;
+                color: #64748b;
+                font-weight: 700;
+                font-size: 14px;
+                margin-top: 6px
+            }
+
+            @media(max-width: 1000px) {
+                .hero-container,.help-grid,.offer-box,.mid-cta-box {
+                    grid-template-columns:1fr
+                }
+
+                .risk-grid,.level-grid,.outcome-grid,.cred-grid {
+                    grid-template-columns: 1fr 1fr
+                }
+
+                .job-grid {
+                    grid-template-columns: 1fr
+                }
+
+                .mobile-menu-btn {
+                    display: inline-flex
+                }
+
+                .nav-links {
+                    display: none;
+                    width: 100%;
+                    flex-direction: column;
+                    gap: 12px;
+                    padding: 18px 0 4px
+                }
+
+                .nav-links.show {
+                    display: flex
+                }
+
+                .navbar-container {
+                    flex-wrap: wrap
+                }
+
+                .pdf-frame {
+                    height: 620px
+                }
+            }
+
+            @media(max-width: 620px) {
+                .sticky-mobile-cta {
+                    display:flex
+                }
+
+                .form-grid,.benefit-grid {
+                    grid-template-columns: 1fr
+                }
+
+                .navbar-container {
+                    flex-wrap: wrap;
+                    justify-content: center
+                }
+
+                .nav-cta {
+                    width: 100%;
+                    order: 3
+                }
+
+                .mobile-menu-btn {
+                    order: 2
+                }
+
+                .hero {
+                    padding-top: 42px
+                }
+
+                .hero-actions a,.hero-actions button,.mid-cta .primary-cta,.offer-box .primary-cta {
+                    width: 100%
+                }
+
+                .risk-grid,.level-grid,.outcome-grid,.cred-grid {
+                    grid-template-columns: 1fr
+                }
+
+                .risk-box,.offer-box {
+                    padding: 24px
+                }
+
+                .cookie-banner {
+                    left: 12px;
+                    right: 12px;
+                    bottom: 80px;
+                    flex-direction: column;
+                    align-items: flex-start
+                }
+
+                .cookie-actions,.cookie-btn {
+                    width: 100%
+                }
+
+                .pdf-frame {
+                    height: 520px
+                }
+            }
+            .hero-offer{
+    display:inline-block;
+    margin:18px 0;
+    padding:12px 18px;
+    background:#dcfce7;
+    color:#166534;
+    border:1px solid #86efac;
+    border-radius:14px;
+    font-weight:900;
+    font-size:17px;
+}
+        </style>
+    </head>
+    <body>
+        <nav class="navbar">
+            <div class="navbar-container">
+                <div class="logo">
+                    <span class="logo-dot"></span>
+                    Cynakle
+                </div>
+                <ul class="nav-links">
+                    <li>
+                        <a href="#resultats">Ce que vous recevez</a>
+                    </li>
+                    <li>
+                        <a href="#niveaux">Par classe</a>
+                    </li>
+                    <li>
+                        <a href="#risque">Le risque</a>
+                    </li>
+                    <li>
+                        <a href="#exemples">Exemples métiers</a>
+                    </li>
+                    <li>
+                        <a href="#difference">Différence</a>
+                    </li>
+                    <li>
+                        <a href="#rapport">Rapport</a>
+                    </li>
+                </ul>
+                <button class="nav-cta" data-tally-open="RGvR9j" data-tally-layout="modal" data-tally-width="760" data-tally-emoji-text="🎯" data-tally-emoji-animation="wave">Diagnostic gratuit</button>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
             </div>
-          </details>
+        </nav>
+        <header class="hero">
+            <div class="hero-container">
+                <div>
+                    <div class="badge-row">
+                        <span class="badge free">✅ Gratuit pendant la phase de lancement</span>
+                        <span class="badge">⏱️ Formulaire en 1 minute</span>
+                        <span class="badge">🚀 Diagnostic gratuit</span>
+                        <span class="badge warn">⚠️ Dès le collège</span>
+                    </div>
+                    <h1>
+    🎓 Votre enfant rêve d'un métier ?
+    <span>
+        Savez-vous si ses notes lui permettront réellement d'accéder aux formations Parcoursup qui y mènent ?
+    </span>
+</h1>
 
-          <details id="confidentialite">
-            <summary>Politique de confidentialité</summary>
-            <div class="legal-content">
-              <p>Cynakle collecte uniquement les informations nécessaires à la préparation du diagnostic d’orientation demandé par le parent.</p>
-              <h4>Données collectées</h4>
-              <ul>
-                <li>Prénom et adresse email du parent ou du demandeur ;</li>
-                <li>Classe de l’enfant ;</li>
-                <li>Notes scolaires renseignées ;</li>
-                <li>Ville de résidence ;</li>
-                <li>Métiers envisagés ;</li>
-                <li>Informations complémentaires éventuellement fournies dans le formulaire.</li>
-              </ul>
-              <h4>Finalités</h4>
-              <ul>
-                <li>Analyser les informations transmises ;</li>
-                <li>Préparer et envoyer un rapport d’orientation personnalisé ;</li>
-                <li>Répondre aux demandes de contact ;</li>
-                <li>Améliorer le service.</li>
-              </ul>
-              <p>Aucun compte utilisateur n’est créé sur le site. Aucun système de publicité ou d’analyse d’audience de type Google Analytics n’est utilisé à ce stade.</p>
-              <p>Vous pouvez demander l’accès, la rectification ou la suppression de vos données en écrivant à <a href="mailto:contact@cynakle.com">contact@cynakle.com</a>.</p>
-            </div>
-          </details>
+<div class="hero-offer">
+    🎁 Recevez gratuitement un diagnostic d’orientation personnalisé pendant la phase de lancement.
+</div>
 
-          <details id="cookies">
-            <summary>Politique cookies</summary>
-            <div class="legal-content">
-              <p>Le site Cynakle n’utilise pas de cookies publicitaires ni d’outils d’analyse d’audience à ce stade.</p>
-              <p>Un cookie ou stockage local peut être utilisé uniquement pour mémoriser l’acceptation du bandeau cookies. Les formulaires intégrés via Tally peuvent également utiliser des cookies nécessaires à leur bon fonctionnement.</p>
-              <p>En continuant votre navigation ou en cliquant sur « J’ai compris », vous acceptez l’utilisation des cookies strictement nécessaires au fonctionnement du site et des formulaires.</p>
-            </div>
-          </details>
-
-          <details id="cgu">
-            <summary>Conditions générales d’utilisation</summary>
-            <div class="legal-content">
-              <p>L’utilisation du site cynakle.com implique l’acceptation des présentes conditions générales d’utilisation.</p>
-              <h4>Objet du service</h4>
-              <p>Cynakle propose un service gratuit de diagnostic d’orientation scolaire, basé sur les informations transmises par les parents via un formulaire.</p>
-              <h4>Nature du diagnostic</h4>
-              <p>Le rapport fourni constitue une aide à la décision. Il ne remplace pas un conseiller d’orientation, un établissement scolaire, une décision administrative ou une analyse pédagogique complète.</p>
-              <h4>Responsabilité de l’utilisateur</h4>
-              <p>L’utilisateur s’engage à fournir des informations exactes et à ne pas transmettre de données inutiles ou sensibles. Le service est destiné aux parents ou responsables légaux.</p>
-              <h4>Disponibilité du service</h4>
-              <p>Cynakle fait ses meilleurs efforts pour assurer l’accès au site et au formulaire, sans garantir une disponibilité permanente.</p>
-              <h4>Propriété intellectuelle</h4>
-              <p>Les contenus, textes, éléments graphiques, rapports types et supports présents sur le site sont protégés. Toute reproduction non autorisée est interdite.</p>
-            </div>
-          </details>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="faq" class="section">
-    <div class="container">
-      <div class="section-heading">
-        <div class="eyebrow">FAQ</div>
-        <h2>Questions fréquentes des parents</h2>
-      </div>
-      <div class="faq-grid">
-        <div class="faq-card"><h3>Est-ce vraiment gratuit ?</h3><p>Oui, le premier diagnostic est gratuit pour tester l’intérêt du service avec des familles.</p></div>
-        <div class="faq-card"><h3>Pourquoi 48h ?</h3><p>Parce que le rapport est vérifié manuellement avant envoi pour améliorer la fiabilité de l’analyse.</p></div>
-        <div class="faq-card"><h3>Est-ce une décision automatique ?</h3><p>Non. C’est une aide à la décision pour ouvrir une discussion concrète parent-enfant.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <footer class="footer">
-    <b>Cynakle</b> — Plateforme d’orientation scolaire assistée par l’intelligence artificielle.
-    <div class="footer-links">
-      <a href="#qui-sommes-nous">Qui sommes-nous ?</a>
-      <a href="#mentions-legales">Mentions légales</a>
-      <a href="#confidentialite">Confidentialité</a>
-      <a href="#cookies">Cookies</a>
-      <a href="#cgu">CGU</a>
-      <a href="mailto:contact@cynakle.com">Contact</a>
-    </div>
-  </footer>
-
-  <div id="cookieBanner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Information cookies">
+<p class="hero-subtitle">
+    Cynakle analyse les notes scolaires, les métiers visés, les formations Parcoursup, les spécialités du lycée et les critères d’admission afin d’identifier les opportunités à saisir et les risques à anticiper.
+</p>
+                    
+                    
+                    <div class="hero-fast">Remplissez le formulaire en 1 minute pour vérifier si le parcours actuel de votre enfant est cohérent avec ses ambitions.<br> Les premiers diagnostics seront traités progressivement.</div>
+                    <div class="hero-proof">Objectif : mesurer l’intérêt des familles et inviter progressivement les premiers parents à tester les diagnostics Cynakle.</div>
+                    <div class="hero-actions">
+                        <button class="primary-cta" data-tally-open="RGvR9j" data-tally-layout="modal" data-tally-width="760" data-tally-emoji-text="🎯" data-tally-emoji-animation="wave">Recevoir mon diagnostic gratuit</button>
+                        <a class="secondary-cta" href="#rapport">Voir un exemple de rapport</a>
+                    </div>
+                    <p class="micro-proof">
+                        <b>Sans engagement</b>
+                        · Aucun paiement demandé · Données limitées · Pour les parents de la 6e à la Terminale
+                    </p>
+                </div>
+                <div class="hero-card">
+                    <h3>Le futur diagnostic Cynakle</h3>
+                    <p>Une lecture structurée pour les parents, plus claire qu'une simple recherche Google.</p>
+                    <div class="mini-report">
+  <div class="mini-line">
+    <div class="ico">🎯</div>
     <div>
-      <strong>Cookies</strong>
-      <p>Nous utilisons uniquement les cookies nécessaires au fonctionnement du site et des formulaires Tally. Aucun cookie publicitaire ni Google Analytics n’est utilisé.</p>
-      <p><a href="#cookies">Lire la politique cookies</a></p>
-    </div>
-    <div class="cookie-actions">
-      <button class="cookie-btn cookie-secondary" onclick="document.getElementById('cookies').open = true; location.hash='cookies';">En savoir plus</button>
-      <button class="cookie-btn cookie-accept" id="acceptCookies">J’ai compris</button>
+      <strong>Métier visé : Ingénieur informatique</strong>
+      <span>Objectif professionnel indiqué par la famille.</span>
     </div>
   </div>
 
-  <script>
-    (function () {
-      var banner = document.getElementById('cookieBanner');
-      var btn = document.getElementById('acceptCookies');
-      if (!localStorage.getItem('cynakle_cookie_ok')) {
-        banner.classList.add('show');
-      }
-      btn.addEventListener('click', function () {
-        localStorage.setItem('cynakle_cookie_ok', 'true');
-        banner.classList.remove('show');
-      });
-    })();
-  </script>
+  <div class="mini-line">
+    <div class="ico">📚</div>
+    <div>
+      <strong>Matières à renforcer : Mathématiques</strong>
+      <span>Matière clé pour les formations scientifiques et informatiques.</span>
+    </div>
+  </div>
 
-</body>
+  <div class="mini-line">
+    <div class="ico">🎓</div>
+    <div>
+      <strong>Formations Parcoursup pertinentes</strong>
+      <span>BUT Informatique, Prépa MPII, Licence Informatique.</span>
+    </div>
+  </div>
+
+  <div class="mini-line">
+    <div class="ico">⚠️</div>
+    <div>
+      <strong>Risque identifié</strong>
+      <span>Niveau scientifique à renforcer pour sécuriser le dossier.</span>
+    </div>
+  </div>
+
+  <div class="mini-line">
+    <div class="ico">🚀</div>
+    <div>
+      <strong>Action recommandée</strong>
+      <span>Sécuriser les choix de spécialités au lycée.</span>
+    </div>
+  </div>
+</div>
+                    <div class="alert-mini">Les premiers diagnostics seront proposés progressivement pendant la phase de lancement.</div>
+                </div>
+            </div>
+        </header>
+        <section id="resultats" class="section outcomes">
+            <div class="container">
+                <div class="section-heading">
+                    <div class="eyebrow">Résultat concret</div>
+                    <h2>Ce que Cynakle pourra vous aider à comprendre</h2>
+                    <p>La phase de lancement nous aide à construire un rapport réellement utile pour les parents : clair, concret et actionnable.</p>
+                </div>
+                <div class="outcome-grid">
+                    <div class="outcome-card">
+                        <div class="icon">📊</div>
+                        <h3>Niveau actuel</h3>
+                        <p>Les forces et faiblesses scolaires par rapport au métier visé.</p>
+                    </div>
+                    <div class="outcome-card">
+                        <div class="icon">🎓</div>
+                        <h3>Formations ciblées</h3>
+                        <p>Les parcours Parcoursup et formations associées au projet.</p>
+                    </div>
+                    <div class="outcome-card">
+                        <div class="icon">📚</div>
+                        <h3>Matières clés</h3>
+                        <p>Les matières qui pèsent le plus dans le dossier.</p>
+                    </div>
+                    <div class="outcome-card">
+                        <div class="icon">🧭</div>
+                        <h3>Spécialités utiles</h3>
+                        <p>Les choix à anticiper au lycée selon l’objectif.</p>
+                    </div>
+                    <div class="outcome-card">
+                        <div class="icon">🚀</div>
+                        <h3>Plan d’action</h3>
+                        <p>Ce qu’il faut renforcer en priorité et pourquoi.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="pilote" class="section pilot-benefits">
+            <div class="container">
+                <div class="benefit-box">
+                    <div class="section-heading" style="margin-bottom:22px">
+                        <div class="eyebrow">Phase de lancement</div>
+                        <h2>Pourquoi demander un diagnostic maintenant ?</h2>
+                        <p>Vous ne remplissez pas un long dossier : vous signalez votre intérêt et vous rejoignez les familles prioritaires pour le lancement.</p>
+                    </div>
+                    <div class="benefit-grid">
+                        <div class="benefit-card">
+                            <h3>🚀 Diagnostic gratuit</h3>
+                            <p>Vous serez informé en priorité lorsque les premiers diagnostics Cynakle seront ouverts.</p>
+                        </div>
+                        <div class="benefit-card">
+                            <h3>🎁 Offre de lancement</h3>
+                            <p>Les premiers parents pourront bénéficier des conditions de lancement avant l’ouverture officielle.</p>
+                        </div>
+                        <div class="benefit-card">
+                            <h3>🧭 Influence utile</h3>
+                            <p>Vos réponses aident à construire un service réellement adapté aux inquiétudes des familles.</p>
+                        </div>
+                    </div>
+                    <div class="launch-note">Après soumission : “Votre demande a bien été enregistrée. Les premiers diagnostics seront envoyés progressivement dans le cadre du lancement.”</div>
+                </div>
+            </div>
+        </section>
+        <section id="niveaux" class="section level-choice">
+            <div class="container">
+                <div class="section-heading">
+                    <div class="eyebrow">Pour quelle classe ?</div>
+                    <h2>Un diagnostic utile de la 6e jusqu’à Parcoursup</h2>
+                    <p>À chaque âge, l’objectif n’est pas le même : préserver les possibilités, préparer les choix, puis sécuriser le dossier.</p>
+                </div>
+                <div class="level-grid">
+                    <div class="level-card">
+                        <div class="level-icon">📚</div>
+                        <h3>6e / 5e</h3>
+                        <p>Repérer les matières fragiles avant qu’elles ne deviennent un vrai retard.</p>
+                        <small>À cet âge, on ne choisit pas Parcoursup : on évite d’accumuler des faiblesses invisibles.</small>
+                        <button class="mini-cta" data-tally-open="RGvR9j" data-tally-layout="modal" data-tally-width="760">Accès collège</button>
+                    </div>
+                    <div class="level-card">
+                        <div class="level-icon">🧭</div>
+                        <h3>4e / 3e</h3>
+                        <p>Comprendre les matières importantes et les premières décisions d’orientation.</p>
+                        <small>Plus les ambitions sont identifiées tôt, plus il est possible d’agir progressivement.</small>
+                        <button class="mini-cta" data-tally-open="RGvR9j" data-tally-layout="modal" data-tally-width="760">Accès 4e / 3e</button>
+                    </div>
+                    <div class="level-card">
+                        <div class="level-icon">🎯</div>
+                        <h3>Seconde</h3>
+                        <p>Anticiper les spécialités et leur lien avec les formations visées.</p>
+                        <small>Certaines spécialités sont fortement recommandées pour les formations sélectives.</small>
+                        <button class="mini-cta" data-tally-open="RGvR9j" data-tally-layout="modal" data-tally-width="760">Accès Seconde</button>
+                    </div>
+                    <div class="level-card">
+                        <div class="level-icon">🚀</div>
+                        <h3>Première / Terminale</h3>
+                        <p>Comparer le dossier actuel aux attentes des formations Parcoursup.</p>
+                        <small>L’objectif est d’aborder Parcoursup avec une vision plus claire des possibilités réelles.</small>
+                        <button class="mini-cta" data-tally-open="RGvR9j" data-tally-layout="modal" data-tally-width="760">Accès lycée</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="risque" class="section risk-section">
+            <div class="container">
+                <div class="risk-box">
+                    <div class="risk-title">
+                        <h2>⚠️ Parcoursup se déroule en Terminale. Sa préparation commence souvent bien avant.</h2>
+                        <p>Les formations ne regardent pas seulement le métier rêvé. Elles regardent le dossier, les matières, les spécialités, la régularité et la cohérence du parcours.</p>
+                    </div>
+                    <div class="risk-grid">
+                        <div class="risk-card">
+                            <div class="icon">⚠️</div>
+                            <h3>Formation trop sélective</h3>
+                            <p>La famille découvre le niveau réel demandé trop tard.</p>
+                        </div>
+                        <div class="risk-card">
+                            <div class="icon">📉</div>
+                            <h3>Matières clés trop faibles</h3>
+                            <p>Une moyenne correcte peut cacher une faiblesse déterminante.</p>
+                        </div>
+                        <div class="risk-card">
+                            <div class="icon">🧭</div>
+                            <h3>Mauvais choix de spécialités</h3>
+                            <p>Des portes peuvent se fermer avant même la Terminale.</p>
+                        </div>
+                        <div class="risk-card">
+                            <div class="icon">🤖</div>
+                            <h3>Métier qui évolue</h3>
+                            <p>La tension métier et l’impact de l’IA peuvent changer les perspectives.</p>
+                        </div>
+                    </div>
+                    <div class="truth">
+                        <span>Le vrai risque n’est pas Parcoursup.</span>
+                        <br>Le vrai risque est de découvrir trop tard ce qui aurait pu être anticipé plus tôt.
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="exemples" class="section examples">
+            <div class="container">
+                <div class="section-heading">
+                    <div class="eyebrow">Exemples métiers</div>
+                    <h2>Le diagnostic devient concret quand on part du métier visé</h2>
+                    <p>Le parent ne reçoit pas une réponse générique : l’analyse dépend du métier, des notes, de la ville et du niveau scolaire.</p>
+                </div>
+                <div class="job-grid">
+                    <div class="job-card">
+                        <h3>👨‍⚕️ Médecin</h3>
+                        <ul>
+                            <li>Matières clés : maths, physique-chimie, SVT</li>
+                            <li>Parcours possibles : PASS, LAS, licences scientifiques</li>
+                            <li>Risque : sous-estimer le niveau scientifique attendu</li>
+                        </ul>
+                    </div>
+                    <div class="job-card">
+                        <h3>💻 Ingénieur informatique</h3>
+                        <ul>
+                            <li>Matières clés : maths, sciences, anglais</li>
+                            <li>Parcours possibles : BUT, licence, prépa, école post-bac</li>
+                            <li>Risque : dossier scientifique insuffisamment solide</li>
+                        </ul>
+                    </div>
+                    <div class="job-card">
+                        <h3>⚖️ Avocat</h3>
+                        <ul>
+                            <li>Matières clés : français, histoire, langues, argumentation</li>
+                            <li>Parcours possibles : licence droit, double licence</li>
+                            <li>Risque : croire que seules les notes générales suffisent</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="aide" class="section help-section">
+            <div class="container">
+                <div class="section-heading">
+                    <div class="eyebrow">Comment Cynakle vous aide</div>
+                    <h2>Nous analysons ce que les parents n’ont pas toujours le temps de comparer</h2>
+                    <p>Métier visé, formations Parcoursup, critères, notes attendues, ville et débouchés : tout est regroupé dans un rapport lisible.</p>
+                </div>
+                <div class="help-grid">
+                    <div class="help-card">
+                        <h3>Ce que nous analysons</h3>
+                        <ul class="check-list">
+                            <li>
+                                ✅ Les <b>métiers</b>
+                                qui intéressent votre enfant
+                            </li>
+                            <li>
+                                ✅ Les <b>formations Parcoursup</b>
+                                qui permettent d’y accéder
+                            </li>
+                            <li>
+                                ✅ Les <b>critères d’admission</b>
+                                et matières importantes
+                            </li>
+                            <li>
+                                ✅ Les <b>notes actuelles</b>
+                                et écarts éventuels à combler
+                            </li>
+                            <li>
+                                ✅ Les <b>formations proches</b>
+                                de votre ville
+                            </li>
+                            <li>
+                                ✅ La <b>tension métier 2024 / 2030</b>
+                                et l’impact potentiel de l’IA
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="result-card">
+                        <h3>Exemple de rendu dans le rapport</h3>
+                        <div class="result-sample">
+                            <div class="sample-row">
+                                <span>Compatibilité avec le métier visé</span>
+                                <span class="pill orange">72%</span>
+                            </div>
+                            <div class="sample-row">
+                                <span>Matière à renforcer en priorité</span>
+                                <span class="pill red">Maths</span>
+                            </div>
+                            <div class="sample-row">
+                                <span>Formations Parcoursup pertinentes</span>
+                                <span class="pill blue">14 pistes</span>
+                            </div>
+                            <div class="sample-row">
+                                <span>Point fort du dossier</span>
+                                <span class="pill green">Anglais</span>
+                            </div>
+                            <div class="sample-row">
+                                <span>Action recommandée</span>
+                                <span class="pill orange">Sécuriser les spécialités</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="credibilite" class="section credibility">
+            <div class="container">
+                <div class="section-heading">
+                    <div class="eyebrow">Sérieux et méthode</div>
+                    <h2>Un service en construction, avec une méthode sérieuse</h2>
+                    <p>Cynakle est actuellement en phase de lancement. Le service vise à donner aux parents une lecture structurée et exploitable, sans remplacer l’établissement ni un conseiller.</p>
+                </div>
+                <div class="cred-grid">
+                    <div class="cred-card">
+                        <h3>🔍 Vérification humaine</h3>
+                        <p>Les premiers diagnostics seront relus avant envoi afin d’éviter une réponse automatique brute.</p>
+                    </div>
+                    <div class="cred-card">
+                        <h3>📚 Sources structurées</h3>
+                        <p>L’analyse s’appuie sur les formations, les critères, les matières et les parcours associés au métier visé.</p>
+                    </div>
+                    <div class="cred-card">
+                        <h3>🛡️ Données limitées</h3>
+                        <p>Nous demandons uniquement les informations nécessaires : classe, notes, ville, métier visé et email.</p>
+                    </div>
+                </div>
+                <div class="disclaimer">Le diagnostic est une aide à la décision : il ne garantit pas une admission et ne remplace pas les décisions officielles des établissements.</div>
+            </div>
+        </section>
+        <section id="difference" class="section comparison-section">
+            <div class="container">
+                <div class="section-heading">
+                    <div class="eyebrow">Pourquoi c’est différent</div>
+                    <h2>Plus concret qu’un conseil général, plus lisible qu’une recherche Google</h2>
+                    <p>Le but n’est pas de remplacer un conseiller, mais de donner aux parents une lecture claire et exploitable.</p>
+                </div>
+                <div class="comparison-card">
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Solution classique</th>
+                            <th>Cynakle</th>
+                        </tr>
+                        <tr>
+                            <td>Conseils souvent généraux</td>
+                            <td>Diagnostic personnalisé selon les notes, la ville et les métiers visés</td>
+                        </tr>
+                        <tr>
+                            <td>Onisep ou Google : beaucoup d’informations à trier</td>
+                            <td>Synthèse lisible avec priorités et écarts à combler</td>
+                        </tr>
+                        <tr>
+                            <td>Chatbot IA : réponse immédiate mais non vérifiée</td>
+                            <td>Accès progressif aux premiers diagnostics avec vérification humaine</td>
+                        </tr>
+                        <tr>
+                            <td>Peu de lien entre notes et formations</td>
+                            <td>Lecture matière par matière selon le projet visé</td>
+                        </tr>
+                        <tr>
+                            <td>Peu de lien avec l’avenir du métier</td>
+                            <td>Ajout de la tension métier 2024 / 2030 et de l’impact IA</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <section class="section mid-cta">
+            <div class="container mid-cta-box">
+                <div>
+                    <h2>Vous avez déjà une idée de métier pour votre enfant ?</h2>
+                    <p>Testez gratuitement la cohérence entre ses notes actuelles et les formations qui peuvent mener à ce métier.</p>
+                </div>
+                <button class="primary-cta" data-tally-open="RGvR9j" data-tally-layout="modal" data-tally-width="760" data-tally-emoji-text="🎯" data-tally-emoji-animation="wave">Recevoir un Diagnostic gratuit</button>
+            </div>
+        </section>
+        <section id="rapport" class="section report-pdf-preview">
+            <div class="container">
+                <div class="section-heading">
+                    <div class="eyebrow">Rapport détaillé</div>
+                    <h2>Aperçu du type de rapport en préparation</h2>
+                    <p>Cet aperçu montre le type d’analyse que Cynakle souhaite proposer : écarts, priorités et pistes de formation.</p>
+                </div>
+                <div class="pdf-preview-card">
+                    <div class="pdf-preview-toolbar">
+                        <span>Aperçu du rapport d’orientation</span>
+                        <a href="rapport_gratuit.pdf" target="_blank" rel="noopener">Ouvrir le PDF</a>
+                    </div>
+                    <object class="pdf-frame" data="rapport_gratuit.pdf#view=FitH&navpanes=0&toolbar=0" type="application/pdf">
+                        <div class="pdf-fallback">
+                            Votre navigateur ne peut pas afficher le PDF directement.<br>
+                            <a href="rapport_gratuit.pdf" target="_blank" rel="noopener">Cliquez ici pour ouvrir le rapport PDF.</a>
+                        </div>
+                    </object>
+                </div>
+            </div>
+        </section>
+        <section id="faq" class="section faq">
+            <div class="container">
+                <div class="section-heading">
+                    <div class="eyebrow">Questions fréquentes</div>
+                    <h2>Avant de remplir le formulaire</h2>
+                </div>
+                <div class="faq-card">
+                    <details>
+                        <summary>La phase de lancement est-elle gratuite ?</summary>
+                        <p>Oui, l’inscription à la phase de lancement est gratuite. Les premiers diagnostics seront proposés progressivement aux familles sélectionnées.</p>
+                    </details>
+                    <details>
+                        <summary>Combien de temps faut-il pour s’inscrire ?</summary>
+                        <p>Environ 1 minute : classe de l’enfant, métier envisagé, ville, besoin principal et email.</p>
+                    </details>
+                    <details>
+                        <summary>Est-ce utile dès la 6e ou la 5e ?</summary>
+                        <p>Oui, mais l’objectif est différent : il ne s’agit pas de choisir Parcoursup, mais de repérer les matières fragiles et de préserver les possibilités futures.</p>
+                    </details>
+                    <details>
+                        <summary>Est-ce que Cynakle remplace un conseiller d’orientation ?</summary>
+                        <p>Non. Cynakle fournit une lecture structurée du dossier et des pistes à discuter ensuite avec l’enfant, la famille ou l’établissement.</p>
+                    </details>
+                    <details>
+                        <summary>Mes données sont-elles utilisées pour autre chose ?</summary>
+                        <p>Les données demandées servent à produire le diagnostic : email, classe, notes, ville et métiers envisagés.</p>
+                    </details>
+                </div>
+            </div>
+        </section>
+        <section id="diagnostic" class="section cta-section">
+            <div class="container">
+                <div class="offer-box">
+                    <div>
+                        <h2>Demandez votre diagnostic gratuit.</h2>
+                        <p>Votre demande sera enregistrée. Les premiers diagnostics seront envoyés progressivement dans le cadre du lancement.</p>
+                        <div class="cta-points">
+                            <span>⏱️ Formulaire 1 minute</span>
+                            <span>🚀 Diagnostic gratuit</span>
+                            <span>🔍 Vérification humaine</span>
+                            <span>🎓 6e à Terminale</span>
+                        </div>
+                    </div>
+                    <button class="primary-cta" data-tally-open="RGvR9j" data-tally-layout="modal" data-tally-width="760" data-tally-emoji-text="🎯" data-tally-emoji-animation="wave">Recevoir un Diagnostic gratuit</button>
+                </div>
+            </div>
+        </section>
+        <section class="section founder-section">
+    <div class="container">
+        <div class="founder-card">
+            <div class="founder-badge">👋 Pourquoi Cynakle ?</div>
+
+            <h2>Une idée née d'une question que se posent beaucoup de parents</h2>
+
+            <p>
+                Je suis père de famille et je me suis rendu compte qu'il était souvent difficile de comprendre les liens entre les notes scolaires, les métiers, les spécialités du lycée et les formations Parcoursup.
+            </p>
+
+            <p>
+                Entre les informations dispersées, les critères d'admission qui évoluent et les choix à anticiper plusieurs années à l'avance, il n'est pas toujours évident de savoir si son enfant est réellement sur la bonne trajectoire.
+            </p>
+
+            <p>
+                J'ai créé <strong>Cynakle</strong> pour aider les familles à obtenir une vision plus claire, plus concrète et plus exploitable de l'orientation scolaire.
+            </p>
+        </div>
+    </div>
+</section>
+        <section id="informations-legales" class="section legal-section">
+            <div class="container">
+                <div class="legal-card">
+                    <details id="qui-sommes-nous">
+                        <summary>Qui sommes-nous ?</summary>
+                        <div class="legal-content">
+                            <p>
+                                <strong>Cynakle</strong>
+                                est une plateforme d’aide à l’orientation scolaire assistée par l’intelligence artificielle. Le service aide les parents à comprendre les forces scolaires de leur enfant, les métiers qu’il vise et les formations qui pourraient correspondre à son profil.
+                            </p>
+                            <p>Cynakle est actuellement en phase de lancement. Les premiers diagnostics seront proposés progressivement aux familles intéressées.</p>
+                        </div>
+                    </details>
+                    <details id="mentions-legales">
+                        <summary>Mentions légales</summary>
+                        <div class="legal-content">
+                            <p>
+                                <strong>Éditeur du site :</strong>
+                                CYNAKLE, société par actions simplifiée, immatriculée au RCS de Nanterre.
+                            </p>
+                            <p>
+                                <strong>SIREN :</strong>
+                                928 312 669 — <strong>SIRET :</strong>
+                                928 312 669 00015.
+                            </p>
+                            <p>
+                                <strong>Siège social :</strong>
+                                Bâtiment Bourgogne, 19 rue des 4 Vents, 92380 Garches, France.
+                            </p>
+                            <p>
+                                <strong>Contact :</strong>
+                                <a href="mailto:contact@cynakle.com">contact@cynakle.com</a>
+                                .
+                            </p>
+                            <p>
+                                <strong>Hébergement / formulaire :</strong>
+                                les formulaires sont opérés via Tally.so.
+                            </p>
+                        </div>
+                    </details>
+                    <details id="confidentialite">
+                        <summary>Confidentialité</summary>
+                        <div class="legal-content">
+                            <p>Cynakle collecte uniquement les informations nécessaires à la préparation du diagnostic demandé.</p>
+                            <ul>
+                                <li>Email du parent ;</li>
+                                <li>classe de l’enfant ;</li>
+                                <li>notes scolaires ;</li>
+                                <li>ville ;</li>
+                                <li>métiers envisagés.</li>
+                            </ul>
+                            <p>
+                                Vous pouvez demander l’accès, la rectification ou la suppression de vos données à <a href="mailto:contact@cynakle.com">contact@cynakle.com</a>
+                                .
+                            </p>
+                        </div>
+                    </details>
+                    <details id="cookies">
+                        <summary>Cookies</summary>
+                        <div class="legal-content">
+                            <p>Le site n’utilise pas de cookies publicitaires ni d’outils d’analyse d’audience à ce stade. Un stockage local peut être utilisé pour mémoriser l’acceptation du bandeau cookies.</p>
+                        </div>
+                    </details>
+                    <details id="cgu">
+                        <summary>CGU</summary>
+                        <div class="legal-content">
+                            <p>Les informations recueillies servent à mesurer l’intérêt des familles et à préparer le lancement. Le futur diagnostic constituera une aide à la décision et ne remplacera pas un conseiller d’orientation, un établissement scolaire ou une décision administrative.</p>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+        <footer class="footer">
+            <b>Cynakle</b>
+            — Phase de lancement du diagnostic d’orientation de la 6e à Parcoursup.
+            <div class="footer-links">
+                <a href="#qui-sommes-nous">Qui sommes-nous ?</a>
+                <a href="#mentions-legales">Mentions légales</a>
+                <a href="#confidentialite">Confidentialité</a>
+                <a href="#cookies">Cookies</a>
+                <a href="#cgu">CGU</a>
+                <a href="mailto:contact@cynakle.com">Contact</a>
+            </div>
+        </footer>
+        <button class="sticky-mobile-cta" data-tally-open="RGvR9j" data-tally-layout="modal" data-tally-width="760">Recevoir un Diagnostic gratuit</button>
+        <div id="cookieBanner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Information cookies">
+            <div>
+                <strong>Cookies</strong>
+                <p>Nous utilisons uniquement les cookies nécessaires au fonctionnement du site et des formulaires Tally.</p>
+                <p>
+                    <a href="#cookies">Lire la politique cookies</a>
+                </p>
+            </div>
+            <div class="cookie-actions">
+                <button class="cookie-btn cookie-secondary" onclick="document.getElementById('cookies').open = true; location.hash='cookies';">En savoir plus</button>
+                <button class="cookie-btn cookie-accept" id="acceptCookies">J’ai compris</button>
+            </div>
+        </div>
+        <script>
+            (function() {
+                var banner = document.getElementById('cookieBanner');
+                var btn = document.getElementById('acceptCookies');
+                if (!localStorage.getItem('cynakle_cookie_ok')) {
+                    banner.classList.add('show')
+                }
+                btn.addEventListener('click', function() {
+                    localStorage.setItem('cynakle_cookie_ok', 'true');
+                    banner.classList.remove('show')
+                })
+            }
+            )();
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navLinks = document.querySelector('.nav-links');
+            mobileMenuBtn.addEventListener('click', function() {
+                navLinks.classList.toggle('show')
+            });
+            document.querySelectorAll('.nav-links a').forEach(function(link) {
+                link.addEventListener('click', function() {
+                    navLinks.classList.remove('show')
+                })
+            });
+        </script>
+    </body>
 </html>
